@@ -1,0 +1,20 @@
+---
+- name: install sudo
+  apt:
+    name: sudo
+    update_cache: yes
+    state: latest
+
+- name: allow sudo group to have passwordless sudo access
+  lineinfile:
+    path: /etc/sudoers
+    state: present
+    regexp: "^%sudo"
+    line: "%sudo ALL=(ALL) NOPASSWD: ALL"
+    validate: "/usr/sbin/visudo -cf %s"
+
+- name: adding existing user '{{ user }}' to sudo group
+  user:
+    name: "{{ user }}"
+    groups: sudo
+    append: yes
