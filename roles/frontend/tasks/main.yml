@@ -1,0 +1,9 @@
+---
+- name: run frontend in docker container
+  docker_container:
+    name: frontend
+    image: nginx:latest
+    pull: yes
+    state: started
+    ports:
+      - "80:80"
