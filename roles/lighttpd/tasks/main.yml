@@ -1,0 +1,15 @@
+---
+- name: install lighttpd
+  apt:
+    name: lighttpd
+    state: latest
+    update_cache: yes
+
+- name: change lighttpd port to 8080
+  lineinfile:
+    path: /etc/lighttpd/lighttpd.conf
+    state: present
+    regexp: "^server\\.port\\s*=\\s*"
+    line: "server.port = 8080"
+  notify:
+    - restart lighttpd

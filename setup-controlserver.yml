@@ -6,6 +6,7 @@
     - sudo
     - ssh
     - dnsmasq
+    - lighttpd
     - pxe
     - docker
     - frontend
