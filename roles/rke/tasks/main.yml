@@ -1,0 +1,17 @@
+---
+- name: download rke
+  get_url:
+    url: "{{ rke_url }}"
+    checksum: "{{ rke_checksum }}"
+    dest: /usr/bin/rke
+    mode: "+x"
+
+- name: import cluster.yml config
+  template:
+    src: "cluster.yml.j2"
+    dest: "~/.kube/config"
+    mode: 0775
+    force: yes
+
+- name: setup cluster
+  command: rke up"

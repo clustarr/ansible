@@ -1,0 +1,19 @@
+cluster_name: rancher
+
+nodes:
+  - address: 192.168.40.20
+    user: ubuntu
+    role:
+      - controlplane
+      - etcd
+      - worker
+  - address: 192.168.40.180
+    user: ubuntu
+    role:
+      - worker
+
+network:
+  plugin: weave
+
+ingress:
+  provider: nginx
