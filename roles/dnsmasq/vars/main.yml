@@ -1,0 +1,10 @@
+---
+dhcp_start_addr: 192.168.40.100  # TODO: make this variable dynamic
+dhcp_end_addr: 192.168.40.200  # TODO: make this variable dynamic
+
+dhcp_dns_servers:
+  - "{{ ansible_default_ipv4.gateway }}"
+  - 1.1.1.1  # cloudflare primary ip
+  - 1.0.0.1  # cloudflare secondary ip
+
+tftp_directory: /srv/tftp

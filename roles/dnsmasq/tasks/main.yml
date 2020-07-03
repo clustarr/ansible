@@ -1,0 +1,21 @@
+---
+- name: install dnsmasq engine
+  apt:
+    name: dnsmasq
+    state: latest
+    update_cache: yes
+
+- name: import dnsmasq config
+  template:
+    src: "etc/dnsmasq.conf.j2"
+    dest: "/etc/dnsmasq.conf"
+    mode: 0644
+    force: yes
+  notify:
+    - restart dnsmasq
+
+- name: create tftp directory
+  file:
+    path: "{{ tftp_directory }}"
+    state: directory
+    mode: 0775

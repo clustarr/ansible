@@ -1,0 +1,19 @@
+interface={{ ansible_default_ipv4.interface }}
+bind-interfaces
+dhcp-range={{ dhcp_start_addr }},{{ dhcp_end_addr }}
+dhcp-option=option:router,{{ ansible_default_ipv4.gateway }}
+{% if dhcp_dns_servers is defined -%}
+{% if dhcp_dns_servers is iterable -%}
+{% set dns_servers = [] -%}
+{% for ip in dhcp_dns_servers -%}
+{{ dns_servers.append(ip) }}
+{%- endfor %}
+dhcp-option=option:dns-server,{{ dns_servers|join(',') }}
+{% else -%}
+dhcp-option=option:dns-server,{{ dhcp_dns_servers }}
+{%- endif %}
+{%- endif %}
+dhcp-option=option:netmask,{{ ansible_default_ipv4.netmask }}
+dhcp-boot=pxelinux.0
+enable-tftp
+tftp-root={{ tftp_directory }}
