@@ -1,0 +1,12 @@
+# ansible-playbook setup-controlserver.yml -u ansible -K
+---
+- hosts: controlserver
+  become: yes
+  roles:
+    - sudo
+    - ssh
+    - dnsmasq
+    - pxe-setup
+    - docker
+    - frontend
+    - ansible

@@ -1,5 +1,5 @@
 ---
-- name: install dnsmasq engine
+- name: install dnsmasq
   apt:
     name: dnsmasq
     state: latest
