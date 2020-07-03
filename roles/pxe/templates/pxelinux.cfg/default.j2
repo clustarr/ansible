@@ -1,4 +1,5 @@
-path pxelinux.cfg
-include pxelinux.cfg/menu.cfg
-default debian
-prompt 0
+DEFAULT install
+LABEL install
+KERNEL vmlinuz
+INITRD initrd
+APPEND root=/dev/ram0 ramdisk_size=1500000 ip=dhcp url=http://{{ ansible_default_ipv4.address }}/ubuntu-server.iso autoinstall ds=nocloud-net;s=http://{{ ansible_default_ipv4.address }}/cloud-init/

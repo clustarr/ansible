@@ -6,7 +6,7 @@
     - sudo
     - ssh
     - dnsmasq
-    - pxe-setup
+    - pxe
     - docker
     - frontend
     - ansible
