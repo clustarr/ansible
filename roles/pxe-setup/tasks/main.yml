@@ -1,0 +1,58 @@
+---
+- name: download debian netboot image
+  get_url:
+    url: "http://{{ debian_mirror }}/debian/dists/buster/main/installer-amd64/current/images/netboot/netboot.tar.gz"
+    dest: /tmp/netboot.tar.gz
+
+- name: extract netboot image into tftp directory
+  unarchive:
+    src: /tmp/netboot.tar.gz
+    dest: "{{ tftp_directory }}"
+    remote_src: yes
+    extra_opts:
+      - --strip-components=1
+
+- name: copy file pxelinux.0 to tftp directory
+  copy:
+    src: "{{ tftp_directory }}/debian-installer/amd64/pxelinux.0"
+    dest: "{{ tftp_directory }}/pxelinux.0"
+    remote_src: yes
+
+- name: copy file ldlinux.c32 to tftp directory
+  copy:
+    src: "{{ tftp_directory }}/debian-installer/amd64/boot-screens/ldlinux.c32"
+    dest: "{{ tftp_directory }}/ldlinux.c32"
+    remote_src: yes
+
+- name: create pxelinux.cfg directory
+  file:
+    path: "{{ tftp_directory }}/pxelinux.cfg"
+    state: directory
+    mode: 0775
+
+- name: import pxelinux default config
+  template:
+    src: "pxelinux.cfg/default.j2"
+    dest: "{{ tftp_directory }}/pxelinux.cfg/default"
+    mode: 0775
+    force: yes
+
+- name: import pxelinux menu.cfg config
+  template:
+    src: "pxelinux.cfg/menu.cfg.j2"
+    dest: "{{ tftp_directory }}/pxelinux.cfg/menu.cfg"
+    mode: 0775
+    force: yes
+
+- name: create preseed directory
+  file:
+    path: "{{ tftp_directory }}/preseed"
+    state: directory
+    mode: 0775
+
+- name: import debian preseed config
+  template:
+    src: "preseed/debian-preseed.cfg.j2"
+    dest: "{{ tftp_directory }}/preseed/debian-preseed.cfg"
+    mode: 0775
+    force: yes

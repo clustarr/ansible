@@ -1,0 +1,3 @@
+label debian
+kernel debian-installer/amd64/linux
+append auto=true priority=critical vga=788 initrd=debian-installer/amd64/initrd.gz preseed/url=tftp://{{ ansible_default_ipv4.address }}/preseed/debian-preseed.cfg
