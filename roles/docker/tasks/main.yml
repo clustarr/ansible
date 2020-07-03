@@ -1,0 +1,41 @@
+---
+- name: install requirements
+  apt:
+    name:
+      - apt-transport-https
+      - ca-certificates
+      - curl
+      - gnupg-agent
+      - software-properties-common
+      - python3-pip
+    state: latest
+    update_cache: yes
+
+- name: add docker GPG key
+  apt_key:
+    url: https://download.docker.com/linux/ubuntu/gpg
+    state: present
+
+- name: add docker repository
+  apt_repository:
+    repo: deb [arch=amd64] https://download.docker.com/linux/ubuntu {{ ansible_distribution_release }} stable
+    state: present
+
+- name: install docker engine
+  apt:
+    name:
+      - docker-ce
+      - docker-ce-cli
+      - containerd.io
+    state: latest
+    update_cache: yes
+
+- name: adding existing user '{{ user }}' to group docker
+  user:
+    name: "{{ user }}"
+    groups: docker
+    append: yes
+
+- name: install pip docker module
+  pip:
+    name: docker
