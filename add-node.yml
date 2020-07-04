@@ -1,3 +1,4 @@
+# ansible-playbook add-node.yml -u root -k --extra-vars "name=node0"
 ---
 - hosts: proxmox
   roles:

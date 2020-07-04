@@ -27,5 +27,9 @@
     api_user: "{{ user }}"
     api_password: "{{ pass }}"
     api_host: "{{ host }}"
-    name: node0
+    name: "{{ name }}"
     node: pve
+    cores: 2
+    memory: 4096
+    net: '{"net0":"virtio,bridge=vmbr0"}'
+    virtio: '{"virtio0":"{{ storage }}:10"}'

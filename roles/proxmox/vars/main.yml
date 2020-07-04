@@ -2,6 +2,7 @@
 user: root@pam
 pass: "123456"
 host: 192.168.40.192
+storage: local-lvm
 
 enterprise_repository: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
 no_subscription_repository: "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
