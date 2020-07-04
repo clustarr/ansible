@@ -1,0 +1,31 @@
+---
+- name: remove proxmox enterprise repository
+  apt_repository:
+    repo: "{{ enterprise_repository }}"
+    state: absent
+
+- name: add proxmox no-subscription repository
+  apt_repository:
+    repo: "{{ no_subscription_repository }}"
+    state: present
+
+- name: install pip
+  apt:
+    name:
+      - python3-pip
+    state: latest
+    update_cache: yes
+
+- name: install pip modules proxmoxer and requests
+  pip:
+    name:
+      - proxmoxer
+      - requests
+
+- name: create new proxmox vm
+  proxmox_kvm:
+    api_user: "{{ user }}"
+    api_password: "{{ pass }}"
+    api_host: "{{ host }}"
+    name: node0
+    node: pve

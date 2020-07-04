@@ -14,4 +14,4 @@
     force: yes
 
 - name: setup cluster
-  command: rke up"
+  command: "rke up"
