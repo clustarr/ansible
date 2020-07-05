@@ -1,12 +1,13 @@
 ---
 - name: download pxelinux.0
   get_url:
-    url: "http://archive.ubuntu.com/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/pxelinux.0"
+    url: "{{ pxelinux0_url }}"
     dest: "{{ tftp_directory }}"
 
 - name: download ubuntu server iso
   get_url:
-    url: "http://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso"
+    url: "{{ ubuntu_server_url }}"
+    checksum: "{{ ubuntu_server_checksum }}"
     dest: /var/www/html/ubuntu-server.iso
 
 - name: extract kernel and initramfs from ubuntu server iso
