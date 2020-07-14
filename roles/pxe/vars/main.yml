@@ -7,5 +7,5 @@ tftp_directory: /srv/tftp
 # Current release is https://mirrors.edge.kernel.org/pub/linux/utils/boot/syslinux/syslinux-6.03.tar.gz and the path inside the archive is syslinux-6.03/bios/core/pxelinux.0
 pxelinux0_url: "http://archive.ubuntu.com/ubuntu/dists/focal/main/installer-amd64/current/legacy-images/netboot/ubuntu-installer/amd64/pxelinux.0"
 
-ubuntu_server_url: "http://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso"
-ubuntu_server_checksum: "caf3fd69c77c439f162e2ba6040e9c320c4ff0d69aad1340a514319a9264df9f"
+ubuntu_server_url: http://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso
+ubuntu_server_checksum: sha256:caf3fd69c77c439f162e2ba6040e9c320c4ff0d69aad1340a514319a9264df9f

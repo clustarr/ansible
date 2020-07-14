@@ -29,6 +29,7 @@
     api_host: "{{ host }}"
     name: "{{ name }}"
     node: pve
+    sockets: 2
     cores: 4
     memory: 3072
     net: '{"net0":"virtio,bridge=vmbr0"}'
