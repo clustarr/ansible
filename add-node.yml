@@ -1,5 +1,29 @@
 # ansible-playbook add-node.yml -u root -k --extra-vars "name=node0"
 ---
 - hosts: proxmox
-  roles:
-    - proxmox
+  vars:
+    username: "root@pam"
+    password: "123456"
+    storage: "local-lvm"
+  tasks:
+    - name: create new proxmox vm
+      proxmox_kvm:
+        api_user: "{{ username }}"
+        api_password: "{{ password }}"
+        api_host: "{{ ansible_default_ipv4.address }}"
+        name: "{{ name }}"
+        node: pve
+        sockets: 2
+        cores: 4
+        memory: 3072
+        net: '{"net0":"virtio,bridge=vmbr0"}'
+        virtio: '{"virtio0":"{{ storage }}:10"}'
+
+    - name: start proxmox vm
+      proxmox_kvm:
+        api_user: "{{ username }}"
+        api_password: "{{ password }}"
+        api_host: "{{ ansible_default_ipv4.address }}"
+        name: "{{ name }}"
+        node: pve
+        state: started
