@@ -1,0 +1,6 @@
+---
+- name: install kubectl
+  get_url:
+    url: "{{ kubectl_url }}"
+    dest: /usr/bin/kubectl
+    mode: "+x"

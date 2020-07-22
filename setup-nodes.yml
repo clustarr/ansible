@@ -1,4 +1,4 @@
-# ansible-playbook setup-nodes.yml -u ansible -k -K
+# ansible-playbook setup-nodes.yml -u ansible -K
 ---
 - hosts: nodes
   become: yes
