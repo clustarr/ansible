@@ -9,9 +9,6 @@
 - name: import cluster.yml config
   template:
     src: "cluster.yml.j2"
-    dest: "~/.kube/config"
+    dest: "/home/ansible/cluster.yml"
     mode: 0775
     force: yes
-
-- name: setup cluster
-  command: "rke up"

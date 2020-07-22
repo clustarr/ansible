@@ -11,3 +11,4 @@
     - docker
     - frontend
     - ansible
+    - rke
