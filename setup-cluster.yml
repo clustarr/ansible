@@ -1,0 +1,6 @@
+# ansible-playbook setup-cluster.yml -u ansible
+---
+- hosts: controlserver
+  tasks:
+    - name: setup cluster
+      command: "rke up"
