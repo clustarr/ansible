@@ -6,6 +6,10 @@
     password: "123456"
     storage: "local-lvm"
     node: pve
+    sockets: 2
+    cores: 4
+    memory: 3072
+    storage_capacity: 40  # unit: GB
   tasks:
     - name: create new proxmox vm
       proxmox_kvm:
@@ -14,11 +18,11 @@
         api_host: "{{ ansible_default_ipv4.address }}"
         name: "{{ name }}"
         node: "{{ node }}"
-        sockets: 2
-        cores: 4
-        memory: 3072
+        sockets: "{{ sockets }}"
+        cores: "{{ cores }}"
+        memory: "{{ memory }}"
         net: '{"net0":"virtio,bridge=vmbr0"}'
-        virtio: '{"virtio0":"{{ storage }}:40"}'
+        virtio: '{"virtio0":"{{ storage }}:{{ storage_capacity }}"}'
         state: present
 
     - name: wait for vm to appear
