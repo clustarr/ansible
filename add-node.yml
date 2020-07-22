@@ -18,7 +18,7 @@
         cores: 4
         memory: 3072
         net: '{"net0":"virtio,bridge=vmbr0"}'
-        virtio: '{"virtio0":"{{ storage }}:10"}'
+        virtio: '{"virtio0":"{{ storage }}:40"}'
         state: present
 
     - name: wait for vm to appear
