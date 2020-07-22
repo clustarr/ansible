@@ -8,3 +8,5 @@ autoinstall:
   ssh:
     install-server: true
     allow-pw: true
+    authorized-keys:
+      - "{{ publickey['content'] | b64decode | trim() }}"

@@ -49,6 +49,21 @@
     state: directory
     mode: 0775
 
+- name: create ssh directory
+  file:
+    path: "/home/ansible/.ssh"
+    state: directory
+    mode: 0775
+
+- name: generate openssh keypair
+  openssh_keypair:
+    path: /home/ansible/.ssh/id_rsa
+
+- name: read public key
+  slurp:
+    src: /home/ansible/.ssh/id_rsa.pub
+  register: publickey
+
 - name: import cloud-init user-data.yml config
   template:
     src: "cloud-init/user-data.yml.j2"
