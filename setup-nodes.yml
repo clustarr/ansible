@@ -1,0 +1,6 @@
+# ansible-playbook setup-nodes.yml -u ansible -k -K
+---
+- hosts: nodes
+  become: yes
+  roles:
+    - docker
