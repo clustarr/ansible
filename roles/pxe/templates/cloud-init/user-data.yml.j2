@@ -1,6 +1,19 @@
 #cloud-config
+# The previous line is required. Do not delete it.
+#
+# more info about this file:
+# https://ubuntu.com/server/docs/install/autoinstall-reference
+# https://discourse.ubuntu.com/t/please-test-autoinstalls-for-20-04/15250
+#
 autoinstall:
   version: 1
+  refresh-installer:
+    update: true
+  locale: en_US
+  user-data:
+    timezone: Europe/Berlin
+  keyboard:
+    layout: de
   identity:
     hostname: clustarrnode
     username: ansible
