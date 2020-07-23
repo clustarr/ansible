@@ -13,3 +13,5 @@
     line: "server.port = 8080"
   notify:
     - restart lighttpd
+
+- meta: flush_handlers

@@ -19,3 +19,5 @@
     path: "{{ tftp_directory }}"
     state: directory
     mode: 0775
+
+- meta: flush_handlers
