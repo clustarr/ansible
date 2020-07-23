@@ -1,5 +1,10 @@
 # ansible-playbook setup-proxmox.yml -k
 ---
+- hosts: localhost
+  connection: local
+  tasks:
+    - include: tasks/add-host-key.yml host={{ item }}
+      with_items: "{{ groups['proxmox'] }}"
 - hosts: proxmox
   remote_user: root
   roles:
