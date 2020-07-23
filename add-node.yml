@@ -1,4 +1,4 @@
-# ansible-playbook add-node.yml --extra-vars "name=node0"
+# ansible-playbook add-node.yml --extra-vars "name=clustarr-node1"
 ---
 - hosts: proxmox
   remote_user: ansible
