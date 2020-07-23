@@ -1,6 +1,12 @@
 # ansible-playbook -i /etc/ansible/proxmox.py setup-nodes.yml -K
 ---
-- hosts: nodes
+- hosts: localhost
+  connection: local
+  tasks:
+    - include: tasks/add-host-key.yml host={{ item }}
+      with_items: "{{ groups['all'] }}"
+
+- hosts: all
   remote_user: ansible
   become: yes
   roles:

@@ -1,0 +1,10 @@
+---
+- name: "check for existing entry for host {{ host }} in known_hosts"
+  shell: "ssh-keygen -F {{ host }}"
+  failed_when: false
+  changed_when: false
+  ignore_errors: yes
+  register: known_host_check
+- name: "write host key for host {{ host }} to known_hosts"
+  when: known_host_check.rc != 0
+  shell: "ssh-keyscan -H {{ host }} >> ~/.ssh/known_hosts"
