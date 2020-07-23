@@ -1,5 +1,10 @@
 # ansible-playbook setup-controlserver.yml -k -K
 ---
+- hosts: localhost
+  connection: local
+  tasks:
+    - include: tasks/add-host-key.yml host={{ item }}
+      with_items: "{{ groups['controlserver'] }}"
 - hosts: controlserver
   remote_user: ansible
   become: yes
