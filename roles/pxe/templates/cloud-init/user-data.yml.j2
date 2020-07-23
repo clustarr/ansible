@@ -15,12 +15,13 @@ autoinstall:
   keyboard:
     layout: de
   identity:
-    hostname: clustarrnode
+    hostname: clustarr-node1
     username: ansible
     password: "$6$ix9g2d6AqYKgn7jb$KF179w.FiLXMdG/raUBn/4cxvRAe/Mf/vFOov4ZChUsdN3CG3zIKp30HVUs9A7b0fz.EogdHLc12do4TV/PhP1"
   ssh:
     install-server: true
     allow-pw: true
     authorized-keys:
-      - "{{ ssh_public_key }}"
       - "{{ publickey['content'] | b64decode | trim() }}"
+  late-commands:
+    - "sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers"
