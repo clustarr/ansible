@@ -1,6 +1,7 @@
-# ansible-playbook setup-proxmox.yml -u root -k
+# ansible-playbook setup-proxmox.yml -k
 ---
 - hosts: proxmox
+  remote_user: root
   roles:
     - proxmox
     - sudo

@@ -1,6 +1,7 @@
-# ansible-playbook add-node.yml -u ansible --extra-vars "name=node0"
+# ansible-playbook add-node.yml --extra-vars "name=node0"
 ---
 - hosts: proxmox
+  remote_user: ansible
   vars:
     username: "root@pam"
     password: "123456"

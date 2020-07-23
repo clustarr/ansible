@@ -1,6 +1,7 @@
-# ansible-playbook setup-nodes.yml -u ansible -K
+# ansible-playbook -i /etc/ansible/proxmox.py setup-nodes.yml -K
 ---
 - hosts: nodes
+  remote_user: ansible
   become: yes
   roles:
     - docker

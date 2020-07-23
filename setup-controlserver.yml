@@ -1,6 +1,7 @@
-# ansible-playbook setup-controlserver.yml -u ansible -k -K
+# ansible-playbook setup-controlserver.yml -k -K
 ---
 - hosts: controlserver
+  remote_user: ansible
   become: yes
   roles:
     - sudo
