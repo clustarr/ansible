@@ -1,12 +1,13 @@
+# this playbook is executed on the controlserver
 # ansible-playbook -i /etc/ansible/proxmox.py setup-nodes.yml
 ---
 - hosts: localhost
   connection: local
   tasks:
     - include: tasks/add-host-key.yml host={{ item }}
-      with_items: "{{ groups['all'] }}"
+      with_items: "{{ groups['running'] }}"
 
-- hosts: all
+- hosts: running
   remote_user: ansible
   become: yes
   roles:

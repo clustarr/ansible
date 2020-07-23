@@ -1,3 +1,4 @@
+# this playbook is executed on a random host
 # ansible-playbook setup-proxmox.yml -k
 ---
 - hosts: localhost

@@ -1,3 +1,4 @@
+# this playbook is executed on a random host
 # ansible-playbook setup-controlserver.yml -k -K
 ---
 - hosts: localhost

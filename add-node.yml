@@ -1,3 +1,4 @@
+# this playbook is executed on the controlserver
 # ansible-playbook add-node.yml --extra-vars "name=clustarr-node1"
 ---
 - hosts: proxmox
