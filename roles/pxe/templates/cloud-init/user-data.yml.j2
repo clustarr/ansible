@@ -24,4 +24,4 @@ autoinstall:
     authorized-keys:
       - "{{ publickey['content'] | b64decode | trim() }}"
   late-commands:
-    - "sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/g' /etc/sudoers"
+    - "sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/g' /target/etc/sudoers"
