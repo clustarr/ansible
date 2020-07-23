@@ -1,0 +1,7 @@
+---
+- name: import cluster.yml config
+  template:
+    src: "cluster.yml.j2"
+    dest: "/home/ansible/cluster.yml"
+    mode: 0775
+    force: yes

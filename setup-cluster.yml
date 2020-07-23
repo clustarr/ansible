@@ -1,7 +1,10 @@
+# this playbook is executed on the controlserver
 # ansible-playbook setup-cluster.yml
 ---
-- hosts: controlserver
-  remote_user: ansible
+- hosts: localhost
+  connection: local
+  roles:
+    - rke-config
   tasks:
     - name: setup cluster
       command: "rke up"
