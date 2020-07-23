@@ -14,3 +14,8 @@
     - ansible
     - rke
     - kubectl
+  tasks:
+    - name: download clustarr ansible repo
+      git:
+        repo: https://github.com/clustarr/ansible.git
+        dest: /home/ansible/ansible
