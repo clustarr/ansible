@@ -1,16 +1,18 @@
 cluster_name: rancher
 
 nodes:
-  - address: 192.168.40.20
+  - address: {{ groups['running'][0] }}
     user: ansible
     role:
       - controlplane
       - etcd
       - worker
-  - address: 192.168.40.180
-    user: ubuntu
+  {% for host in groups['running'][1:] -%}
+  - address: {{ host }}
+    user: ansible
     role:
       - worker
+  {%- endfor %}
 
 network:
   plugin: weave
