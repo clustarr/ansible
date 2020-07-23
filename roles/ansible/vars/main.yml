@@ -1,0 +1,2 @@
+---
+ansible_proxmox_inventory_url: "https://github.com/xezpeleta/Ansible-Proxmox-inventory/raw/master/proxmox.py"
