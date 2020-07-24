@@ -20,4 +20,5 @@
     state: directory
     mode: 0775
 
+# flush handlers to start triggered handlers before next role is executed
 - meta: flush_handlers

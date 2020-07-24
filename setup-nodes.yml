@@ -1,6 +1,7 @@
 # this playbook is executed on the controlserver
 # ansible-playbook setup-nodes.yml
 ---
+# add node ssh host keys to local known hosts
 - hosts: localhost
   connection: local
   tasks:

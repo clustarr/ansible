@@ -49,16 +49,15 @@
     state: directory
     mode: 0775
 
+# generate openssh keypair to add it to the cloud-init config
 - name: create ssh directory
   file:
     path: "/home/ansible/.ssh"
     state: directory
     mode: 0775
-
 - name: generate openssh keypair
   openssh_keypair:
     path: /home/ansible/.ssh/id_rsa
-
 - name: read public key
   slurp:
     src: /home/ansible/.ssh/id_rsa.pub

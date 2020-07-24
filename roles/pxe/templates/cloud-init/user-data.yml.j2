@@ -24,4 +24,5 @@ autoinstall:
     authorized-keys:
       - "{{ publickey['content'] | b64decode | trim() }}"
   late-commands:
+    # allow user to have passworless sudo access
     - "sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/g' /target/etc/sudoers"
