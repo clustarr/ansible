@@ -65,7 +65,7 @@
 - name: read public key
   slurp:
     src: /home/ansible/.ssh/id_rsa.pub
-  register: publickey
+  register: ssh_public_key
 
 - name: import cloud-init user-data.yml config
   template:

@@ -22,7 +22,7 @@ autoinstall:
     install-server: true
     allow-pw: true
     authorized-keys:
-      - "{{ publickey['content'] | b64decode | trim() }}"
+      - "{{ ssh_public_key['content'] | b64decode | trim() }}"
   late-commands:
     # allow user to have passworless sudo access
     - "sed -i 's/^%sudo.*/%sudo ALL=(ALL) NOPASSWD: ALL/g' /target/etc/sudoers"

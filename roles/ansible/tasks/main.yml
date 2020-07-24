@@ -1,9 +1,10 @@
 ---
-- name: install ansible
+- name: install ansible and sshpass
   become: yes
   apt:
     name:
       - ansible
+      - sshpass
     state: latest
     update_cache: yes
 

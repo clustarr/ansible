@@ -1,4 +1,4 @@
-# this playbook is executed on a random host
+# this playbook is executed on the controlserver
 # ansible-playbook setup-proxmox.yml -k
 ---
 # add node ssh host keys to local known hosts
