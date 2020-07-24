@@ -6,7 +6,7 @@
   connection: local
   tasks:
     - include: tasks/add-host-key.yml host={{ item }}
-      with_items: "{{ groups['running'] }}"
+      with_items: "{{ groups['running'] | default([]) }}"
 
 - hosts: running
   remote_user: ansible
