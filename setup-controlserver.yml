@@ -6,6 +6,7 @@
   tasks:
     - include: tasks/add-host-key.yml host={{ item }}
       with_items: "{{ groups['controlserver'] }}"
+
 - hosts: controlserver
   remote_user: ansible
   become: yes

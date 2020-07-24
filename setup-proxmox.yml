@@ -6,6 +6,7 @@
   tasks:
     - include: tasks/add-host-key.yml host={{ item }}
       with_items: "{{ groups['proxmox'] }}"
+
 - hosts: proxmox
   remote_user: root
   roles:
