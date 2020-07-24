@@ -1,5 +1,6 @@
 ---
 - name: download rke
+  become: yes
   get_url:
     url: "{{ rke_url }}"
     checksum: "{{ rke_checksum }}"

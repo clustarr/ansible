@@ -5,8 +5,8 @@
     state: present
     key: "{{ ssh_public_key }}"
 
-# TODO: check if this is deprecated
 - name: disable password authentication for root
+  become: yes
   lineinfile:
     path: /etc/ssh/sshd_config
     state: present

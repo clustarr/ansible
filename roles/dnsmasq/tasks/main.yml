@@ -1,11 +1,13 @@
 ---
 - name: install dnsmasq
+  become: yes
   apt:
     name: dnsmasq
     state: latest
     update_cache: yes
 
 - name: import dnsmasq config
+  become: yes
   template:
     src: "etc/dnsmasq.conf.j2"
     dest: "/etc/dnsmasq.conf"
@@ -15,9 +17,12 @@
     - restart dnsmasq
 
 - name: create tftp directory
+  become: yes
   file:
     path: "{{ tftp_directory }}"
     state: directory
+    owner: "1000"
+    group: "1000"
     mode: 0775
 
 # flush handlers to start triggered handlers before next role is executed

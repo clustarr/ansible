@@ -1,5 +1,6 @@
 ---
 - name: install ansible
+  become: yes
   apt:
     name:
       - ansible
@@ -7,6 +8,7 @@
     update_cache: yes
 
 - name: download ansible proxmox inventory
+  become: yes
   get_url:
     url: "{{ ansible_proxmox_inventory_url }}"
     dest: /etc/ansible/proxmox.py
@@ -14,6 +16,7 @@
 
 # proxmox.py is currently using the shebang "#!/usr/bin/env python", python implies and python2 which is EOL
 - name: adjust shebang in ansible proxmox inventory script
+  become: yes
   lineinfile:
     path: /etc/ansible/proxmox.py
     state: present
@@ -22,6 +25,7 @@
 
 # TODO: make this dynamic
 - name: import ansible proxmox inventory config
+  become: yes
   template:
     src: "proxmox.json.j2"
     dest: "/etc/ansible/proxmox.json"

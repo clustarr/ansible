@@ -10,6 +10,5 @@
 
 - hosts: running
   remote_user: ansible
-  become: yes
   roles:
     - docker

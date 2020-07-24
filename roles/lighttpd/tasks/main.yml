@@ -1,11 +1,13 @@
 ---
 - name: install lighttpd
+  become: yes
   apt:
     name: lighttpd
     state: latest
     update_cache: yes
 
 - name: change lighttpd port to 8080
+  become: yes
   lineinfile:
     path: /etc/lighttpd/lighttpd.conf
     state: present
@@ -13,6 +15,15 @@
     line: "server.port = 8080"
   notify:
     - restart lighttpd
+
+- name: change owner of directory /var/www/html
+  become: yes
+  file:
+    path: "/var/www/html"
+    state: directory
+    owner: "1000"
+    group: "1000"
+    mode: 0775
 
 # flush handlers to start triggered handlers before next role is executed
 - meta: flush_handlers

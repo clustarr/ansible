@@ -1,5 +1,6 @@
 ---
 - name: install kubectl
+  become: yes
   get_url:
     url: "{{ kubectl_url }}"
     dest: /usr/bin/kubectl

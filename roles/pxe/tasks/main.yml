@@ -10,21 +10,25 @@
     checksum: "{{ ubuntu_server_checksum }}"
     dest: /var/www/html/ubuntu-server.iso
 
+- name: install syslinux-common and p7zip-full
+  become: yes
+  apt:
+    name:
+      - syslinux-common  # to copy file ldlinux.c32
+      - p7zip-full  # for module iso_extract
+    state: latest
+    update_cache: yes
+
 - name: extract kernel and initramfs from ubuntu server iso
   iso_extract:
     image: /var/www/html/ubuntu-server.iso
     dest: "{{ tftp_directory }}"
     files:
-    - casper/vmlinuz
-    - casper/initrd
-
-- name: install syslinux-common
-  apt:
-    name: syslinux-common
-    state: latest
-    update_cache: yes
+      - casper/vmlinuz
+      - casper/initrd
 
 - name: copy file ldlinux.c32 to tftp directory
+  become: yes
   copy:
     src: "/usr/lib/syslinux/modules/bios/ldlinux.c32"
     dest: "{{ tftp_directory }}"

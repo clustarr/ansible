@@ -10,9 +10,7 @@
 
 - hosts: controlserver
   remote_user: ansible
-  become: yes
   roles:
-    - sudo
     - ssh
     - dnsmasq
     - lighttpd
