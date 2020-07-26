@@ -3,4 +3,5 @@ dhcp-range={{ ansible_default_ipv4.network }},proxy
 dhcp-boot=pxelinux.0
 enable-tftp
 tftp-root={{ tftp_directory }}
+tftp-unique-root=mac
 pxe-service=x86PC,"Network Boot",pxelinux
