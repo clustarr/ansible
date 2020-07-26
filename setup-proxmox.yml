@@ -8,6 +8,9 @@
     - include: tasks/add-host-key.yml host={{ item }}
       with_items: "{{ groups['proxmox'] }}"
 
+    # generate openssh keypair for role ssh
+    - include: tasks/create-openssh-keypair.yml
+
 - hosts: proxmox
   remote_user: root
   tasks:
