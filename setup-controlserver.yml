@@ -5,7 +5,9 @@
 - hosts: localhost
   connection: local
   tasks:
-    - include: tasks/add-host-key.yml host={{ item }}
+    - include: tasks/add-host-key.yml
+      vars:
+        host: "{{ item }}"
       with_items: "{{ groups['controlserver'] }}"
 
 - hosts: controlserver
