@@ -10,5 +10,6 @@
 
 - hosts: running
   remote_user: ansible
-  roles:
-    - docker
+  tasks:
+    - include_role:
+        name: docker

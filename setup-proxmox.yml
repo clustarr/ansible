@@ -10,7 +10,12 @@
 
 - hosts: proxmox
   remote_user: root
-  roles:
-    - proxmox
-    - sudo
-    - ssh
+  tasks:
+    - include_role:
+        name: proxmox
+
+    - include_role:
+        name: sudo
+
+    - include_role:
+        name: ssh

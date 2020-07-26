@@ -10,17 +10,34 @@
 
 - hosts: controlserver
   remote_user: ansible
-  roles:
-    - ssh
-    - dnsmasq
-    - lighttpd
-    - pxe
-    - docker
-    - frontend
-    - ansible
-    - rke
-    - kubectl
   tasks:
+    - include_role:
+        name: ssh
+
+    - include_role:
+        name: dnsmasq
+
+    - include_role:
+        name: lighttpd
+
+    - include_role:
+        name: pxe
+
+    - include_role:
+        name: docker
+
+    - include_role:
+        name: frontend
+
+    - include_role:
+        name: ansible
+
+    - include_role:
+        name: rke
+
+    - include_role:
+        name: kubectl
+
     - name: download clustarr ansible repo
       git:
         repo: https://github.com/clustarr/ansible.git
