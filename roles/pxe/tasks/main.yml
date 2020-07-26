@@ -1,4 +1,10 @@
 ---
+- name: create tftp base directory
+  file:
+    path: "{{ tftp_directory }}/base"
+    state: directory
+    mode: 0775
+
 - name: download pxelinux.0
   get_url:
     url: "{{ pxelinux0_url }}"

@@ -1,11 +1,11 @@
 ---
-- name: "create tftp directory for node"
+- name: create tftp directory for node
   file:
     path: "{{ tftp_directory }}/{{ mac }}"
     state: directory
     mode: 0775
 
-- name: "create symlinks from tftp base directory to tftp node directory"
+- name: create symlinks from tftp base directory to tftp node directory
   file:
     src: "{{ tftp_directory }}/base/{{ item }}"
     dest: "{{ tftp_directory }}/{{ mac }}/{{ item }}"
