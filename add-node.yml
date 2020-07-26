@@ -1,19 +1,25 @@
 # this playbook is executed on the controlserver
 # ansible-playbook add-node.yml --extra-vars "name=clustarr-node1"
 ---
+# set proxmox variables
 - hosts: proxmox
   remote_user: ansible
-  vars:
-    username: "root@pam"
-    password: "123456"
-    storage: "local-lvm"
-    node: pve
-    sockets: 2
-    cores: 4
-    memory: 3072
-    storage_capacity: 40  # unit: GB
+  tasks:
+    - set_fact:
+        username: "root@pam"
+        password: "123456"
+        storage: "local-lvm"
+        node: pve
+        sockets: 2
+        cores: 4
+        memory: 3072
+        storage_capacity: 40  # unit: GB
+
+- hosts: proxmox
+  remote_user: ansible
   tasks:
     - name: create new proxmox vm
+      register: vm
       proxmox_kvm:
         api_user: "{{ username }}"
         api_password: "{{ password }}"
@@ -27,6 +33,21 @@
         virtio: '{"virtio0":"{{ storage }}:{{ storage_capacity }}"}'
         state: present
 
+    - set_fact:
+        mac: "{{ vm.mac.net0 | replace(':', '-') | lower }}"
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - include_role:
+        name: pxe-config
+      vars:
+        hostname: "{{ name }}"
+        mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
+
+- hosts: proxmox
+  remote_user: ansible
+  tasks:
     - name: wait for vm to appear
       retries: 15
       delay: 2

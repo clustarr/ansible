@@ -1,0 +1,63 @@
+---
+- name: "create tftp directory for node"
+  file:
+    path: "{{ tftp_directory }}/{{ mac }}"
+    state: directory
+    mode: 0775
+
+- name: "create symlinks from tftp base directory to tftp node directory"
+  file:
+    src: "{{ tftp_directory }}/base/{{ item }}"
+    dest: "{{ tftp_directory }}/{{ mac }}/{{ item }}"
+    state: link
+  with_items:
+    - initrd
+    - ldlinux.c32
+    - pxelinux.0
+    - vmlinuz
+
+- name: create pxelinux.cfg directory
+  file:
+    path: "{{ tftp_directory }}/{{ mac }}/pxelinux.cfg"
+    state: directory
+    mode: 0775
+
+- name: import pxelinux default config
+  template:
+    src: "pxelinux.cfg/default.j2"
+    dest: "{{ tftp_directory }}/{{ mac }}/pxelinux.cfg/default"
+    mode: 0775
+    force: yes
+
+- name: create cloud-init directory
+  file:
+    path: "{{ http_directory }}/cloud-init/{{ mac }}/"
+    state: directory
+    mode: 0775
+
+# generate openssh keypair to add it to the cloud-init config
+- name: create ssh directory
+  file:
+    path: "/home/ansible/.ssh"
+    state: directory
+    mode: 0775
+- name: generate openssh keypair
+  openssh_keypair:
+    path: /home/ansible/.ssh/id_rsa
+- name: read public key
+  slurp:
+    src: /home/ansible/.ssh/id_rsa.pub
+  register: ssh_public_key
+
+- name: import cloud-init user-data.yml config
+  template:
+    src: "cloud-init/user-data.yml.j2"
+    dest: "{{ http_directory }}/cloud-init/{{ mac }}/user-data"
+    mode: 0775
+    force: yes
+
+- name: touch cloud-init meta-data file
+  file:
+    path: "{{ http_directory }}/cloud-init/{{ mac }}/meta-data"
+    state: touch
+    mode: 0775

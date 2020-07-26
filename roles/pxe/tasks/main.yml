@@ -2,7 +2,7 @@
 - name: download pxelinux.0
   get_url:
     url: "{{ pxelinux0_url }}"
-    dest: "{{ tftp_directory }}"
+    dest: "{{ tftp_directory }}/base"
 
 - name: download ubuntu server iso
   get_url:
@@ -22,7 +22,7 @@
 - name: extract kernel and initramfs from ubuntu server iso
   iso_extract:
     image: /var/www/html/ubuntu-server.iso
-    dest: "{{ tftp_directory }}"
+    dest: "{{ tftp_directory }}/base"
     files:
       - casper/vmlinuz
       - casper/initrd
@@ -31,51 +31,5 @@
   become: yes
   copy:
     src: "/usr/lib/syslinux/modules/bios/ldlinux.c32"
-    dest: "{{ tftp_directory }}"
+    dest: "{{ tftp_directory }}/base"
     remote_src: yes
-
-- name: create pxelinux.cfg directory
-  file:
-    path: "{{ tftp_directory }}/pxelinux.cfg"
-    state: directory
-    mode: 0775
-
-- name: import pxelinux default config
-  template:
-    src: "pxelinux.cfg/default.j2"
-    dest: "{{ tftp_directory }}/pxelinux.cfg/default"
-    mode: 0775
-    force: yes
-
-- name: create cloud-init directory
-  file:
-    path: "/var/www/html/cloud-init"
-    state: directory
-    mode: 0775
-
-# generate openssh keypair to add it to the cloud-init config
-- name: create ssh directory
-  file:
-    path: "/home/ansible/.ssh"
-    state: directory
-    mode: 0775
-- name: generate openssh keypair
-  openssh_keypair:
-    path: /home/ansible/.ssh/id_rsa
-- name: read public key
-  slurp:
-    src: /home/ansible/.ssh/id_rsa.pub
-  register: ssh_public_key
-
-- name: import cloud-init user-data.yml config
-  template:
-    src: "cloud-init/user-data.yml.j2"
-    dest: "/var/www/html/cloud-init/user-data"
-    mode: 0775
-    force: yes
-
-- name: touch cloud-init meta-data file
-  file:
-    path: /var/www/html/cloud-init/meta-data
-    state: touch
-    mode: 0775
