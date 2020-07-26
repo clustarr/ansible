@@ -16,6 +16,16 @@
   notify:
     - restart lighttpd
 
+- name: enable directory listing in lighttpd
+  become: yes
+  lineinfile:
+    path: /etc/lighttpd/lighttpd.conf
+    state: present
+    regexp: "^server\\.dir-listing\\s*=\\s*"
+    line: 'server.dir-listing = "enable"'
+  notify:
+    - restart lighttpd
+
 - name: change owner of directory /var/www/html
   become: yes
   file:
