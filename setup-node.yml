@@ -1,0 +1,17 @@
+# this playbook is executed on the controlserver
+# ansible-playbook setup-node.yml --extra-vars "host=clustarr-node1"
+---
+# add node ssh host keys to local known hosts
+- hosts: "{{ host }}"
+  remote_user: ansible
+  gather_facts: false
+  tasks:
+    - name: wait for host to become reachable
+      wait_for_connection:
+        timeout: 1800  # 30 minutes
+        sleep: 2
+
+    - setup:
+
+    - include_role:
+        name: docker
