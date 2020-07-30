@@ -4,6 +4,16 @@
 - hosts: controlserver
   remote_user: ansible
   tasks:
+    - name: create ssh directory
+      file:
+        path: "/home/ansible/.ssh"
+        state: directory
+        mode: 0775
+
+    - name: generate openssh keypair
+      openssh_keypair:
+        path: /home/ansible/.ssh/id_rsa
+
     - include_role:
         name: ssh
 

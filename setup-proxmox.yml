@@ -1,12 +1,6 @@
 # this playbook is executed on the controlserver
 # ansible-playbook setup-proxmox.yml -k
 ---
-- hosts: localhost
-  connection: local
-  tasks:
-    # generate openssh keypair for role ssh
-    - include: tasks/create-openssh-keypair.yml
-
 - hosts: proxmox
   remote_user: root
   tasks:
