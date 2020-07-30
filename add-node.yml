@@ -44,7 +44,6 @@
     - include_role:
         name: pxe-config
       vars:
-        hostname: "{{ hostname }}"
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
 # start node
@@ -76,6 +75,7 @@
 # refresh proxmox inventory to get new node
 - hosts: localhost
   connection: local
+  gather_facts: false
   tasks:
     - meta: refresh_inventory
 
