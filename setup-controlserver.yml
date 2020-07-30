@@ -1,15 +1,6 @@
 # this playbook is executed on a random host
 # ansible-playbook setup-controlserver.yml -k -K
 ---
-# add controlserver ssh host key to local known hosts
-- hosts: localhost
-  connection: local
-  tasks:
-    - include: tasks/add-host-key.yml
-      vars:
-        host: "{{ item }}"
-      with_items: "{{ groups['controlserver'] }}"
-
 - hosts: controlserver
   remote_user: ansible
   tasks:

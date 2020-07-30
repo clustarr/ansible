@@ -1,15 +1,9 @@
 # this playbook is executed on the controlserver
 # ansible-playbook setup-proxmox.yml -k
 ---
-# add node ssh host keys to local known hosts
 - hosts: localhost
   connection: local
   tasks:
-    - include: tasks/add-host-key.yml
-      vars:
-        host: "{{ item }}"
-      with_items: "{{ groups['proxmox'] }}"
-
     # generate openssh keypair for role ssh
     - include: tasks/create-openssh-keypair.yml
 
