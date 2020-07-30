@@ -1,0 +1,88 @@
+# this playbook is executed on the controlserver
+# ansible-playbook remove-node.yml --extra-vars "hostname=clustarr-node-6cdef8c1eafc9d0996e3d59920783df7"
+---
+- name: set proxmox variables
+  hosts: proxmox
+  remote_user: ansible
+  tasks:
+    - set_fact:
+        username: "root@pam"
+        password: "123456"
+        node: pve
+
+- name: gather facts from host
+  hosts: "{{ hostname }}"
+  remote_user: ansible
+
+# remove node
+- hosts: proxmox
+  remote_user: ansible
+  tasks:
+    - name: stop proxmox vm
+      proxmox_kvm:
+        api_user: "{{ username }}"
+        api_password: "{{ password }}"
+        api_host: "{{ ansible_default_ipv4.address }}"
+        name: "{{ hostname }}"
+        node: "{{ node }}"
+        state: stopped
+        force: yes
+    
+    - name: remove proxmox vm
+      proxmox_kvm:
+        api_user: "{{ username }}"
+        api_password: "{{ password }}"
+        api_host: "{{ ansible_default_ipv4.address }}"
+        name: "{{ hostname }}"
+        node: "{{ node }}"
+        state: absent
+
+# remove pxe config for node
+- hosts: localhost
+  connection: local
+  tasks:
+    - set_fact:
+        mac: "{{ hostvars[hostname].ansible_default_ipv4.macaddress | replace(':', '-') | lower }}"
+
+    - include_role:
+        name: pxe
+        tasks_from: remove-config
+
+# refresh proxmox inventory to remove node
+- hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - meta: refresh_inventory
+
+# create reachable nodes group
+- hosts: running
+  gather_facts: false
+  tasks:
+    - shell: exit 0
+      ignore_errors: true
+      register: result
+
+    - add_host:
+        name: "{{ inventory_hostname }}"
+        group: workers
+      when:
+        - result is succeeded
+        - inventory_hostname != "clustarr-master"
+
+# remove node from kubernetes cluster
+- hosts: localhost
+  connection: local
+  tasks:
+    - include_role:
+        name: rke
+        tasks_from: config
+
+    - name: setup cluster
+      command: "rke up --config ~/cluster.yml"
+
+    # display cluster pods on all nodes
+    - shell: "kubectl get pod -o wide --all-namespaces --kubeconfig ~/kube_config_cluster.yml"
+      register: result
+    - debug:
+        var: result.stdout_lines
