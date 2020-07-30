@@ -7,7 +7,7 @@ nodes:
       - controlplane
       - etcd
       - worker
-  {% for host in groups['workers'] -%}
+  {% for host in groups['workers'] | default([]) -%}
   - address: {{ host }}
     user: ansible
     role:

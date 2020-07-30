@@ -1,0 +1,10 @@
+---
+- name: remove tftp directory for node
+  file:
+    path: "{{ tftp_directory }}/{{ mac }}"
+    state: absent
+
+- name: remove cloud-init directory for node
+  file:
+    path: "{{ http_directory }}/cloud-init/{{ mac }}"
+    state: absent

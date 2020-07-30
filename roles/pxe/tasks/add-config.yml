@@ -35,9 +35,6 @@
     state: directory
     mode: 0775
 
-# generate openssh keypair to add it to the cloud-init config
-- include: tasks/create-openssh-keypair.yml
-
 - name: import cloud-init user-data.yml config
   template:
     src: "cloud-init/user-data.yml.j2"

@@ -14,7 +14,8 @@
         name: lighttpd
 
     - include_role:
-        name: pxe/install
+        name: pxe
+        tasks_from: install
 
     - include_role:
         name: docker
@@ -26,7 +27,8 @@
         name: ansible
 
     - include_role:
-        name: rke/install
+        name: rke
+        tasks_from: install
 
     - include_role:
         name: kubectl

@@ -1,3 +1,0 @@
----
-tftp_directory: "/srv/tftp"
-http_directory: "/var/www/html"

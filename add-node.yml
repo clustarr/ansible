@@ -1,4 +1,5 @@
 # this playbook is executed on the controlserver
+# ansible-playbook add-node.yml --extra-vars "hostname=clustarr-master"
 # ansible-playbook add-node.yml --extra-vars "hostname=clustarr-node-$(uuidgen | md5sum | awk '{print $1}')"
 ---
 # set proxmox variables
@@ -42,7 +43,8 @@
   connection: local
   tasks:
     - include_role:
-        name: pxe/config
+        name: pxe
+        tasks_from: add-config
       vars:
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
@@ -115,7 +117,8 @@
   connection: local
   tasks:
     - include_role:
-        name: rke/config
+        name: rke
+        tasks_from: config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"
