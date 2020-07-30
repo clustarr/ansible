@@ -1,29 +1,35 @@
 ---
+- name: install syslinux, pxelinux and p7zip-full
+  become: yes
+  apt:
+    name:
+      - syslinux
+      - pxelinux
+      - p7zip-full  # for module iso_extract
+    state: latest
+    update_cache: yes
+
 - name: create tftp base directory
   file:
     path: "{{ tftp_directory }}/base"
     state: directory
     mode: 0775
 
-- name: download pxelinux.0
-  get_url:
-    url: "{{ pxelinux0_url }}"
+- name: copy files to tftp directory
+  become: yes
+  copy:
+    src: "{{ item }}"
     dest: "{{ tftp_directory }}/base"
+    remote_src: yes
+  with_items:
+    - /usr/lib/PXELINUX/pxelinux.0
+    - /usr/lib/syslinux/modules/bios/ldlinux.c32
 
 - name: download ubuntu server iso
   get_url:
     url: "{{ ubuntu_server_url }}"
     checksum: "{{ ubuntu_server_checksum }}"
     dest: /var/www/html/ubuntu-server.iso
-
-- name: install syslinux-common and p7zip-full
-  become: yes
-  apt:
-    name:
-      - syslinux-common  # to copy file ldlinux.c32
-      - p7zip-full  # for module iso_extract
-    state: latest
-    update_cache: yes
 
 - name: extract kernel and initramfs from ubuntu server iso
   iso_extract:
@@ -32,10 +38,3 @@
     files:
       - casper/vmlinuz
       - casper/initrd
-
-- name: copy file ldlinux.c32 to tftp directory
-  become: yes
-  copy:
-    src: "/usr/lib/syslinux/modules/bios/ldlinux.c32"
-    dest: "{{ tftp_directory }}/base"
-    remote_src: yes
