@@ -43,8 +43,8 @@
   connection: local
   tasks:
     - include_role:
-        name: pxe
-        tasks_from: add-config
+        name: clustarr
+        tasks_from: pxe-add-config
       vars:
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
@@ -95,7 +95,8 @@
       setup:
 
     - include_role:
-        name: docker
+        name: clustarr
+        tasks_from: docker
 
 # create reachable nodes group
 - hosts: running
@@ -117,8 +118,8 @@
   connection: local
   tasks:
     - include_role:
-        name: rke
-        tasks_from: config
+        name: clustarr
+        tasks_from: rke-config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"

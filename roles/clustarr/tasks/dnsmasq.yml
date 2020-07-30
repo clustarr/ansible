@@ -9,7 +9,7 @@
 - name: import dnsmasq config
   become: yes
   template:
-    src: "etc/dnsmasq.conf.j2"
+    src: "dnsmasq.conf.j2"
     dest: "/etc/dnsmasq.conf"
     mode: 0644
     force: yes
@@ -25,5 +25,5 @@
     group: "1000"
     mode: 0775
 
-# flush handlers to start triggered handlers before next role is executed
+# flush handlers to start triggered handlers before next task is executed
 - meta: flush_handlers

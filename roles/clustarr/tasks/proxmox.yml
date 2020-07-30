@@ -1,12 +1,12 @@
 ---
 - name: remove proxmox enterprise repository
   apt_repository:
-    repo: "{{ enterprise_repository }}"
+    repo: "{{ proxmox_enterprise_repository }}"
     state: absent
 
 - name: add proxmox no-subscription repository
   apt_repository:
-    repo: "{{ no_subscription_repository }}"
+    repo: "{{ proxmox_no_subscription_repository }}"
     state: present
 
 - name: install pip

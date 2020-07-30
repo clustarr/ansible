@@ -24,7 +24,6 @@
     regexp: "^#!/usr/bin/env python$"
     line: "#!/usr/bin/env python3"
 
-# TODO: make this dynamic
 - name: import ansible proxmox inventory config
   become: yes
   template:

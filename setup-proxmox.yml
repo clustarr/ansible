@@ -5,10 +5,13 @@
   remote_user: root
   tasks:
     - include_role:
-        name: proxmox
+        name: clustarr
+        tasks_from: proxmox
 
     - include_role:
-        name: sudo
+        name: clustarr
+        tasks_from: sudo
 
     - include_role:
-        name: ssh
+        name: clustarr
+        tasks_from: ssh

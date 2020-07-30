@@ -45,8 +45,8 @@
         mac: "{{ hostvars[hostname].ansible_default_ipv4.macaddress | replace(':', '-') | lower }}"
 
     - include_role:
-        name: pxe
-        tasks_from: remove-config
+        name: clustarr
+        tasks_from: pxe-remove-config
 
 # refresh proxmox inventory to remove node
 - hosts: localhost
@@ -75,8 +75,8 @@
   connection: local
   tasks:
     - include_role:
-        name: rke
-        tasks_from: config
+        name: clustarr
+        tasks_from: rke-config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"

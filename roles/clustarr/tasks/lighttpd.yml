@@ -35,5 +35,5 @@
     group: "1000"
     mode: 0775
 
-# flush handlers to start triggered handlers before next role is executed
+# flush handlers to start triggered handlers before next task is executed
 - meta: flush_handlers
