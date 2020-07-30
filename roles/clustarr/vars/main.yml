@@ -1,4 +1,23 @@
 ---
+user: ansible
+
+tftp_directory: /srv/tftp
+http_directory: /var/www/html
+
+ssh_public_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+
+# proxmox api settings
+proxmox_username: "root@pam"
+proxmox_password: "123456"
+proxmox_node: pve
+
+# proxmox vm settings
+proxmox_vm_storage: "local-lvm"
+proxmox_vm_sockets: 2
+proxmox_vm_cores: 4
+proxmox_vm_memory: 3072
+proxmox_vm_storage_capacity: 40  # unit: GB
+
 # dynamic proxmox inventory script
 ansible_proxmox_inventory_url: "https://github.com/xezpeleta/Ansible-Proxmox-inventory/raw/master/proxmox.py"
 

@@ -1,0 +1,15 @@
+---
+- name: create new proxmox vm
+  register: vm
+  proxmox_kvm:
+    api_user: "{{ proxmox_username }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ hostname }}"
+    node: "{{ proxmox_node }}"
+    sockets: "{{ proxmox_vm_sockets }}"
+    cores: "{{ proxmox_vm_cores }}"
+    memory: "{{ proxmox_vm_memory }}"
+    net: '{"net0":"virtio,bridge=vmbr0"}'
+    virtio: '{"virtio0":"{{ proxmox_vm_storage }}:{{ proxmox_vm_storage_capacity }}"}'
+    state: present

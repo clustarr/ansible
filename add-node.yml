@@ -2,38 +2,13 @@
 # ansible-playbook add-node.yml --extra-vars "hostname=clustarr-master"
 # ansible-playbook add-node.yml --extra-vars "hostname=clustarr-node-$(uuidgen | md5sum | awk '{print $1}')"
 ---
-# set proxmox variables
-- hosts: proxmox
-  remote_user: ansible
-  tasks:
-    - set_fact:
-        username: "root@pam"
-        password: "123456"
-        storage: "local-lvm"
-        node: pve
-        sockets: 2
-        cores: 4
-        memory: 3072
-        storage_capacity: 40  # unit: GB
-
 # create new node
 - hosts: proxmox
   remote_user: ansible
   tasks:
-    - name: create new proxmox vm
-      register: vm
-      proxmox_kvm:
-        api_user: "{{ username }}"
-        api_password: "{{ password }}"
-        api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ hostname }}"
-        node: "{{ node }}"
-        sockets: "{{ sockets }}"
-        cores: "{{ cores }}"
-        memory: "{{ memory }}"
-        net: '{"net0":"virtio,bridge=vmbr0"}'
-        virtio: '{"virtio0":"{{ storage }}:{{ storage_capacity }}"}'
-        state: present
+    - include_role:
+        name: clustarr
+        tasks_from: proxmox-create-vm
 
     - set_fact:
         mac: "{{ vm.mac.net0 | replace(':', '-') | lower }}"
@@ -52,27 +27,9 @@
 - hosts: proxmox
   remote_user: ansible
   tasks:
-    - name: wait for vm to appear
-      retries: 15
-      delay: 2
-      register: vm
-      until: '"status" in vm'
-      proxmox_kvm:
-        api_user: "{{ username }}"
-        api_password: "{{ password }}"
-        api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ hostname }}"
-        node: "{{ node }}"
-        state: current
-
-    - name: start proxmox vm
-      proxmox_kvm:
-        api_user: "{{ username }}"
-        api_password: "{{ password }}"
-        api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ hostname }}"
-        node: "{{ node }}"
-        state: started
+    - include_role:
+        name: clustarr
+        tasks_from: proxmox-start-vm
 
 # refresh proxmox inventory to get new node
 - hosts: localhost

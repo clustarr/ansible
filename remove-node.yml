@@ -1,15 +1,6 @@
 # this playbook is executed on the controlserver
 # ansible-playbook remove-node.yml --extra-vars "hostname=clustarr-node-6cdef8c1eafc9d0996e3d59920783df7"
 ---
-- name: set proxmox variables
-  hosts: proxmox
-  remote_user: ansible
-  tasks:
-    - set_fact:
-        username: "root@pam"
-        password: "123456"
-        node: pve
-
 - name: gather facts from host
   hosts: "{{ hostname }}"
   remote_user: ansible
@@ -18,24 +9,9 @@
 - hosts: proxmox
   remote_user: ansible
   tasks:
-    - name: stop proxmox vm
-      proxmox_kvm:
-        api_user: "{{ username }}"
-        api_password: "{{ password }}"
-        api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ hostname }}"
-        node: "{{ node }}"
-        state: stopped
-        force: yes
-    
-    - name: remove proxmox vm
-      proxmox_kvm:
-        api_user: "{{ username }}"
-        api_password: "{{ password }}"
-        api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ hostname }}"
-        node: "{{ node }}"
-        state: absent
+    - include_role:
+        name: clustarr
+        tasks_from: proxmox-remove-vm
 
 # remove pxe config for node
 - hosts: localhost

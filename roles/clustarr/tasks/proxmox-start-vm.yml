@@ -1,0 +1,22 @@
+---
+- name: wait for vm to appear
+  retries: 15
+  delay: 2
+  register: vm
+  until: '"status" in vm'
+  proxmox_kvm:
+    api_user: "{{ proxmox_username }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ hostname }}"
+    node: "{{ proxmox_node }}"
+    state: current
+
+- name: start proxmox vm
+  proxmox_kvm:
+    api_user: "{{ proxmox_username }}"
+    api_password: "{{ proxmox_password }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ hostname }}"
+    node: "{{ proxmox_node }}"
+    state: started

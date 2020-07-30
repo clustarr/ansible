@@ -6,7 +6,7 @@
   tasks:
     - include_role:
         name: clustarr
-        tasks_from: proxmox
+        tasks_from: proxmox-config
 
     - include_role:
         name: clustarr
