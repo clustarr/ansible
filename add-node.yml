@@ -42,7 +42,7 @@
   connection: local
   tasks:
     - include_role:
-        name: pxe-config
+        name: pxe/config
       vars:
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
@@ -115,7 +115,7 @@
   connection: local
   tasks:
     - include_role:
-        name: rke-config
+        name: rke/config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"
