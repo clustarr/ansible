@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook add-node.yml --extra-vars "name=clustarr-node1"
+# ansible-playbook add-node.yml --extra-vars "hostname=clustarr-node-$(uuidgen | md5sum | awk '{print $1}')"
 ---
 # set proxmox variables
 - hosts: proxmox
@@ -15,6 +15,7 @@
         memory: 3072
         storage_capacity: 40  # unit: GB
 
+# create new node
 - hosts: proxmox
   remote_user: ansible
   tasks:
@@ -24,7 +25,7 @@
         api_user: "{{ username }}"
         api_password: "{{ password }}"
         api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ name }}"
+        name: "{{ hostname }}"
         node: "{{ node }}"
         sockets: "{{ sockets }}"
         cores: "{{ cores }}"
@@ -36,15 +37,17 @@
     - set_fact:
         mac: "{{ vm.mac.net0 | replace(':', '-') | lower }}"
 
+# prepare pxe for node
 - hosts: localhost
   connection: local
   tasks:
     - include_role:
         name: pxe-config
       vars:
-        hostname: "{{ name }}"
+        hostname: "{{ hostname }}"
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
+# start node
 - hosts: proxmox
   remote_user: ansible
   tasks:
@@ -57,7 +60,7 @@
         api_user: "{{ username }}"
         api_password: "{{ password }}"
         api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ name }}"
+        name: "{{ hostname }}"
         node: "{{ node }}"
         state: current
 
@@ -66,6 +69,62 @@
         api_user: "{{ username }}"
         api_password: "{{ password }}"
         api_host: "{{ ansible_default_ipv4.address }}"
-        name: "{{ name }}"
+        name: "{{ hostname }}"
         node: "{{ node }}"
         state: started
+
+# refresh proxmox inventory to get new node
+- hosts: localhost
+  connection: local
+  tasks:
+    - meta: refresh_inventory
+
+# setup node after installation and reboot
+- hosts: "{{ hostname }}"
+  remote_user: ansible
+  gather_facts: false
+  tasks:
+    - name: wait for host to become reachable
+      wait_for_connection:
+        timeout: 1800  # 30 minutes
+        sleep: 2
+
+    - name: gathering facts
+      setup:
+
+    - include_role:
+        name: docker
+
+# create reachable nodes group
+- hosts: running
+  gather_facts: false
+  tasks:
+    - shell: exit 0
+      ignore_errors: true
+      register: result
+
+    - add_host:
+        name: "{{ inventory_hostname }}"
+        group: reachable
+      when: result is succeeded
+
+# add node to kubernetes cluster
+- hosts: localhost
+  connection: local
+  tasks:
+    # ensure that new node is in reachable group
+    - add_host:
+        name: "{{ hostname }}"
+        group: reachable
+
+    - include_role:
+        name: rke-config
+
+    - name: setup cluster
+      command: "rke up --config ~/cluster.yml"
+
+    # display cluster pods on all nodes
+    - shell: "kubectl get pod -o wide --all-namespaces --kubeconfig ~/kube_config_cluster.yml"
+      register: result
+    - debug:
+        var: result.stdout_lines
