@@ -105,18 +105,15 @@
 
     - add_host:
         name: "{{ inventory_hostname }}"
-        group: reachable
-      when: result is succeeded
+        group: workers
+      when:
+        - result is succeeded
+        - inventory_hostname != "clustarr-master"
 
 # add node to kubernetes cluster
 - hosts: localhost
   connection: local
   tasks:
-    # ensure that new node is in reachable group
-    - add_host:
-        name: "{{ hostname }}"
-        group: reachable
-
     - include_role:
         name: rke-config
 
