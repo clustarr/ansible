@@ -55,20 +55,7 @@
         name: clustarr
         tasks_from: docker
 
-# create reachable nodes group
-- hosts: running
-  gather_facts: false
-  tasks:
-    - shell: exit 0
-      ignore_errors: true
-      register: result
-
-    - add_host:
-        name: "{{ inventory_hostname }}"
-        group: workers
-      when:
-        - result is succeeded
-        - inventory_hostname != "clustarr-master"
+- import_playbook: group-workers.yml
 
 # add node to kubernetes cluster
 - hosts: localhost

@@ -24,27 +24,7 @@
         name: clustarr
         tasks_from: pxe-remove-config
 
-# refresh proxmox inventory to remove node
-- hosts: localhost
-  connection: local
-  gather_facts: false
-  tasks:
-    - meta: refresh_inventory
-
-# create reachable nodes group
-- hosts: running
-  gather_facts: false
-  tasks:
-    - shell: exit 0
-      ignore_errors: true
-      register: result
-
-    - add_host:
-        name: "{{ inventory_hostname }}"
-        group: workers
-      when:
-        - result is succeeded
-        - inventory_hostname != "clustarr-master"
+- import_playbook: group-workers.yml
 
 # remove node from kubernetes cluster
 - hosts: localhost

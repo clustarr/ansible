@@ -1,0 +1,27 @@
+# this playbook is used by other playbooks
+---
+- hosts: localhost
+  connection: local
+  tasks:
+    - meta: refresh_inventory
+
+- hosts: running
+  remote_user: ansible
+  gather_facts: false
+  tasks:
+    - shell: exit 0
+      ignore_errors: true
+      register: result
+
+    - add_host:
+        name: "{{ inventory_hostname }}"
+        group: workers
+      when:
+        - result is succeeded
+        - inventory_hostname != "clustarr-master"
+
+- hosts: localhost
+  connection: local
+  tasks:
+    - debug:
+        var: groups['workers']
