@@ -1,12 +1,14 @@
 cluster_name: rancher
 
 nodes:
-  - address: clustarr-master
+  {% for host in groups['masters'] | default([]) -%}
+  - address: {{ host }}
     user: ansible
     role:
       - controlplane
       - etcd
       - worker
+  {%- endfor %}
   {% for host in groups['workers'] | default([]) -%}
   - address: {{ host }}
     user: ansible

@@ -15,13 +15,23 @@
 
     - add_host:
         name: "{{ inventory_hostname }}"
+        group: masters
+      when:
+        - result is succeeded
+        - inventory_hostname.startswith('clustarr-master')
+
+    - add_host:
+        name: "{{ inventory_hostname }}"
         group: workers
       when:
         - result is succeeded
-        - inventory_hostname != "clustarr-master"
+        - inventory_hostname.startswith('clustarr-worker')
 
 - hosts: localhost
   connection: local
   tasks:
+    - debug:
+        var: groups['masters']
+
     - debug:
         var: groups['workers']
