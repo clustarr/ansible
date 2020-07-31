@@ -1,0 +1,29 @@
+# this playbook is executed on the controlserver
+# ansible-playbook add-node-to-cluster.yml --extra-vars "hostname=clustarr-worker-6cdef8c1eafc9d0996e3d59920783df7"
+---
+# setup node after installation and reboot
+- hosts: "{{ hostname }}"
+  remote_user: ansible
+  tasks:
+    - include_role:
+        name: clustarr
+        tasks_from: docker
+
+- import_playbook: group-workers.yml
+
+# add node to kubernetes cluster
+- hosts: localhost
+  connection: local
+  tasks:
+    - include_role:
+        name: clustarr
+        tasks_from: rke-config
+
+    - name: setup cluster
+      command: "rke up --config ~/cluster.yml"
+
+    # display cluster pods on all nodes
+    - shell: "kubectl get pod -o wide --all-namespaces --kubeconfig ~/kube_config_cluster.yml"
+      register: result
+    - debug:
+        var: result.stdout_lines
