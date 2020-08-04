@@ -2,11 +2,11 @@
 - name: create new proxmox vm
   register: vm
   proxmox_kvm:
-    api_user: "{{ proxmox_username }}"
-    api_password: "{{ proxmox_password }}"
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_pass }}"
     api_host: "{{ ansible_default_ipv4.address }}"
     name: "{{ hostname }}"
-    node: "{{ proxmox_node }}"
+    node: "{{ proxmox_api_node }}"
     sockets: "{{ proxmox_vm_sockets }}"
     cores: "{{ proxmox_vm_cores }}"
     memory: "{{ proxmox_vm_memory }}"
