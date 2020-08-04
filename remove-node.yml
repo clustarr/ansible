@@ -10,8 +10,8 @@
   remote_user: ansible
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: proxmox-remove-vm
+        name: proxmox
+        tasks_from: remove-vm
 
 # remove pxe config for node
 - hosts: localhost
@@ -21,8 +21,8 @@
         mac: "{{ hostvars[hostname].ansible_default_ipv4.macaddress | replace(':', '-') | lower }}"
 
     - include_role:
-        name: clustarr
-        tasks_from: pxe-remove-config
+        name: pxe
+        tasks_from: remove-config
 
 - import_playbook: group-workers.yml
 
@@ -31,8 +31,8 @@
   connection: local
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: rke-config
+        name: rke
+        tasks_from: config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"

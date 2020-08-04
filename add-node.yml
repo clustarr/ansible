@@ -7,8 +7,8 @@
   remote_user: ansible
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: proxmox-create-vm
+        name: proxmox
+        tasks_from: create-vm
 
     - set_fact:
         mac: "{{ vm.mac.net0 | replace(':', '-') | lower }}"
@@ -18,8 +18,8 @@
   connection: local
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: pxe-add-config
+        name: pxe
+        tasks_from: add-config
       vars:
         mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
@@ -28,8 +28,8 @@
   remote_user: ansible
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: proxmox-start-vm
+        name: proxmox
+        tasks_from: start-vm
 
 # refresh proxmox inventory to get new node
 - hosts: localhost

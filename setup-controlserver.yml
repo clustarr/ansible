@@ -15,40 +15,33 @@
         path: /home/ansible/.ssh/id_rsa
 
     - include_role:
-        name: clustarr
-        tasks_from: ssh
+        name: ssh
 
     - include_role:
-        name: clustarr
-        tasks_from: dnsmasq
+        name: dnsmasq
 
     - include_role:
-        name: clustarr
-        tasks_from: lighttpd
+        name: lighttpd
 
     - include_role:
-        name: clustarr
-        tasks_from: pxe-install
+        name: pxe
+        tasks_from: install
 
     - include_role:
-        name: clustarr
-        tasks_from: docker
+        name: docker
 
     - include_role:
-        name: clustarr
-        tasks_from: frontend
+        name: frontend
 
     - include_role:
-        name: clustarr
-        tasks_from: ansible
+        name: ansible
 
     - include_role:
-        name: clustarr
-        tasks_from: rke-install
+        name: rke
+        tasks_from: install
 
     - include_role:
-        name: clustarr
-        tasks_from: kubectl
+        name: kubectl
 
     - name: download clustarr ansible repo
       git:

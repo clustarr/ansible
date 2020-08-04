@@ -6,8 +6,7 @@
   remote_user: ansible
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: docker
+        name: docker
 
 - import_playbook: group-workers.yml
 
@@ -16,8 +15,8 @@
   connection: local
   tasks:
     - include_role:
-        name: clustarr
-        tasks_from: rke-config
+        name: rke
+        tasks_from: config
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"
