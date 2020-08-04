@@ -3,7 +3,7 @@ user: ansible
 tftp_directory: /srv/tftp
 http_directory: /var/www/html
 
-ssh_public_key: "{{ lookup('file', lookup('env','HOME') + '/.ssh/id_rsa.pub') }}"
+ssh_public_key: "{{ lookup('file', lookup('env', 'HOME') + '/.ssh/id_rsa.pub') }}"
 
 # proxmox api settings
 proxmox_username: "root@pam"

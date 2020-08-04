@@ -2,17 +2,17 @@
 # ansible-playbook setup-controlserver.yml -k -K
 ---
 - hosts: controlserver
-  remote_user: ansible
+  remote_user: "{{ user }}"
   tasks:
     - name: create ssh directory
       file:
-        path: "/home/ansible/.ssh"
+        path: "{{ ansible_env.HOME }}/.ssh"
         state: directory
         mode: 0775
 
     - name: generate openssh keypair
       openssh_keypair:
-        path: /home/ansible/.ssh/id_rsa
+        path: "{{ ansible_env.HOME }}/.ssh/id_rsa"
 
     - include_role:
         name: ssh
@@ -46,4 +46,4 @@
     - name: download clustarr ansible repo
       git:
         repo: https://github.com/clustarr/ansible.git
-        dest: /home/ansible/ansible
+        dest: "{{ ansible_env.HOME }}/ansible"

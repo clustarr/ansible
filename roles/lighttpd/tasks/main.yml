@@ -26,10 +26,10 @@
   notify:
     - restart lighttpd
 
-- name: change owner of directory /var/www/html
+- name: "change owner of directory {{ http_directory }}"
   become: yes
   file:
-    path: "/var/www/html"
+    path: "{{ http_directory }}"
     state: directory
     owner: "1000"
     group: "1000"

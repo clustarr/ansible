@@ -3,7 +3,7 @@ cluster_name: rancher
 nodes:
   {% for host in groups['masters'] | default([]) -%}
   - address: {{ host }}
-    user: ansible
+    user: {{ user }}
     role:
       - controlplane
       - etcd
@@ -11,7 +11,7 @@ nodes:
   {%- endfor %}
   {% for host in groups['workers'] | default([]) -%}
   - address: {{ host }}
-    user: ansible
+    user: {{ user }}
     role:
       - worker
   {%- endfor %}

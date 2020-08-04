@@ -3,11 +3,11 @@
 ---
 - name: gather facts from host
   hosts: "{{ hostname }}"
-  remote_user: ansible
+  remote_user: "{{ user }}"
 
 # remove node
 - hosts: proxmox
-  remote_user: ansible
+  remote_user: "{{ user }}"
   tasks:
     - include_role:
         name: proxmox

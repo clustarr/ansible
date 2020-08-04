@@ -29,11 +29,11 @@
   get_url:
     url: "{{ ubuntu_server_url }}"
     checksum: "{{ ubuntu_server_checksum }}"
-    dest: /var/www/html/ubuntu-server.iso
+    dest: "{{ http_directory }}/ubuntu-server.iso"
 
 - name: extract kernel and initramfs from ubuntu server iso
   iso_extract:
-    image: /var/www/html/ubuntu-server.iso
+    image: "{{ http_directory }}/ubuntu-server.iso"
     dest: "{{ tftp_directory }}/base"
     files:
       - casper/vmlinuz

@@ -4,7 +4,7 @@
 ---
 # create new node
 - hosts: proxmox
-  remote_user: ansible
+  remote_user: "{{ user }}"
   tasks:
     - include_role:
         name: proxmox
@@ -25,7 +25,7 @@
 
 # start node
 - hosts: proxmox
-  remote_user: ansible
+  remote_user: "{{ user }}"
   tasks:
     - include_role:
         name: proxmox
@@ -40,7 +40,7 @@
 
 # setup node after installation and reboot
 - hosts: "{{ hostname }}"
-  remote_user: ansible
+  remote_user: "{{ user }}"
   gather_facts: false
   tasks:
     - name: wait for host to become reachable
