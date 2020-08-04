@@ -5,18 +5,18 @@
   register: vm
   until: '"status" in vm'
   proxmox_kvm:
-    api_user: "{{ proxmox_username }}"
-    api_password: "{{ proxmox_password }}"
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_pass }}"
     api_host: "{{ ansible_default_ipv4.address }}"
     name: "{{ hostname }}"
-    node: "{{ proxmox_node }}"
+    node: "{{ proxmox_api_node }}"
     state: current
 
 - name: start proxmox vm
   proxmox_kvm:
-    api_user: "{{ proxmox_username }}"
-    api_password: "{{ proxmox_password }}"
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_pass }}"
     api_host: "{{ ansible_default_ipv4.address }}"
     name: "{{ hostname }}"
-    node: "{{ proxmox_node }}"
+    node: "{{ proxmox_api_node }}"
     state: started
