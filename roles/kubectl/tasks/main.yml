@@ -3,5 +3,6 @@
   become: yes
   get_url:
     url: "{{ kubectl_url }}"
+    checksum: "{{ kubectl_checksum }}"
     dest: /usr/bin/kubectl
     mode: "+x"
