@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook setup-proxmox.yml -k
+# ansible-playbook setup-proxmox.yml
 ---
 - hosts: proxmox
   remote_user: root

@@ -1,5 +1,5 @@
 # this playbook is executed on a random host
-# ansible-playbook setup-controlserver.yml -k -K
+# ansible-playbook setup-controlserver.yml
 ---
 - hosts: controlserver
   remote_user: "{{ user }}"
