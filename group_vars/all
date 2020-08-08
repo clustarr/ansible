@@ -26,8 +26,8 @@ kubectl_version: v1.18.6  # https://storage.googleapis.com/kubernetes-release/re
 kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
 kubectl_checksum: sha256:62fcb9922164725c7cba5747562f2ad2f4d834ad0a458c1e4c794cc203dcdfb3  # https://storage.googleapis.com/kubernetes-release/release/v1.18.6/bin/linux/amd64/kubectl.sha256
 
-ubuntu_server_url: http://releases.ubuntu.com/20.04/ubuntu-20.04-live-server-amd64.iso  # http://releases.ubuntu.com/20.04/
-ubuntu_server_checksum: sha256:caf3fd69c77c439f162e2ba6040e9c320c4ff0d69aad1340a514319a9264df9f  # https://releases.ubuntu.com/20.04/SHA256SUMS
+ubuntu_server_url: http://releases.ubuntu.com/20.04/ubuntu-20.04.1-live-server-amd64.iso  # http://releases.ubuntu.com/20.04/
+ubuntu_server_checksum: sha256:443511f6bf12402c12503733059269a2e10dec602916c0a75263e5d990f6bb93  # https://releases.ubuntu.com/20.04/SHA256SUMS
 
 rke_version: v1.1.4  # https://github.com/rancher/rke/releases
 rke_url: "https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-amd64"
