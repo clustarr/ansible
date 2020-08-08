@@ -32,3 +32,7 @@ ubuntu_server_checksum: sha256:443511f6bf12402c12503733059269a2e10dec602916c0a75
 rke_version: v1.1.4  # https://github.com/rancher/rke/releases
 rke_url: "https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-amd64"
 rke_checksum: sha256:1c7bb6e7eb3c820475b3ecbc4fc5786a912658b9d0e1f4323759c1bb72d6a758  # https://github.com/rancher/rke/releases
+
+docker_compose_version: 1.26.2  # https://github.com/docker/compose/releases/
+docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
+docker_compose_checksum: sha256:13e50875393decdb047993c3c0192b0a3825613e6dfc0fa271efed4f5dbdd6eb  # https://github.com/docker/compose/releases/

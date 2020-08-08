@@ -43,7 +43,10 @@
     - include_role:
         name: kubectl
 
-    - name: download clustarr ansible repo
+    - include_role:
+        name: docker-compose
+
+    - name: clone clustarr ansible repo
       git:
         repo: https://github.com/clustarr/ansible.git
         dest: "{{ ansible_env.HOME }}/ansible"
