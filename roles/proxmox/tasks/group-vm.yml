@@ -1,0 +1,10 @@
+---
+- name: add group note to proxmox vm
+  proxmox_kvm:
+    api_user: "{{ proxmox_api_user }}"
+    api_password: "{{ proxmox_api_pass }}"
+    api_host: "{{ ansible_default_ipv4.address }}"
+    name: "{{ hostname }}"
+    node: "{{ proxmox_api_node }}"
+    description: "{\"groups\": {{ vm_groups | to_json }}}"
+    update: yes

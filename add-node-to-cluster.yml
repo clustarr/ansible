@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook add-node-to-cluster.yml --extra-vars "hostname=clustarr-worker-6cdef8c1eafc9d0996e3d59920783df7"
+# ansible-playbook add-node-to-cluster.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7 group=masters"
 ---
 # setup node after installation and reboot
 - hosts: "{{ hostname }}"
@@ -8,7 +8,17 @@
     - include_role:
         name: docker
 
-- import_playbook: group-workers.yml
+- hosts: proxmox
+  remote_user: "{{ user }}"
+  tasks:
+    - include_role:
+        name: proxmox
+        tasks_from: group-vm
+      vars:
+        vm_groups:
+          - "{{ group }}"
+
+- import_playbook: group-reachable.yml
 
 # add node to kubernetes cluster
 - hosts: localhost

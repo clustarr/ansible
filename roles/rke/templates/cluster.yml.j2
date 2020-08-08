@@ -1,7 +1,7 @@
 cluster_name: rancher
 
 nodes:
-  {% for host in groups['masters'] | default([]) -%}
+  {% for host in groups['masters_reachable'] | default([]) -%}
   - address: {{ host }}
     user: {{ user }}
     role:
@@ -9,7 +9,7 @@ nodes:
       - etcd
       - worker
   {%- endfor %}
-  {% for host in groups['workers'] | default([]) -%}
+  {% for host in groups['workers_reachable'] | default([]) -%}
   - address: {{ host }}
     user: {{ user }}
     role:

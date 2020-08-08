@@ -12,6 +12,10 @@
     node: "{{ proxmox_api_node }}"
     state: current
 
+# Sometimes the vm cannot be started because it does not exists even though it has been waiting for it to appear.
+- pause:
+    seconds: 5
+
 - name: start proxmox vm
   proxmox_kvm:
     api_user: "{{ proxmox_api_user }}"
