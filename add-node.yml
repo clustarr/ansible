@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook add-node.yml --extra-vars "hostname=clustarr-master-$(uuidgen | md5sum | awk '{print $1}"
+# ansible-playbook add-node.yml --extra-vars "hostname=clustarr-master-$(uuidgen | md5sum | awk '{print $1}')"
 # ansible-playbook add-node.yml --extra-vars "hostname=clustarr-worker-$(uuidgen | md5sum | awk '{print $1}')"
 ---
 # create new node
