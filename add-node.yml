@@ -46,3 +46,13 @@
       wait_for_connection:
         timeout: 1800  # 30 minutes
         sleep: 2
+
+- hosts: proxmox
+  remote_user: "{{ user }}"
+  tasks:
+    - include_role:
+        name: proxmox
+        tasks_from: group-vm
+      vars:
+        vm_groups:
+          - "independents"
