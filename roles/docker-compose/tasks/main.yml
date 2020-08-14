@@ -3,3 +3,17 @@
   become: yes
   pip:
     name: docker-compose
+
+# https://github.com/docker/compose/issues/2847#issuecomment-448230151
+- name: change docker dns-opts to resolve dns issue
+  become: yes
+  template:
+    src: "daemon.json.j2"
+    dest: "/etc/docker/daemon.json"
+    mode: 0775
+    force: yes
+  notify:
+    - restart docker
+
+# flush handlers to start triggered handlers before next task is executed
+- meta: flush_handlers
