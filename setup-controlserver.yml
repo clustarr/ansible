@@ -13,6 +13,16 @@
       openssh_keypair:
         path: "{{ ansible_env.HOME }}/.ssh/id_rsa"
 
+    - name: read openssh pubic key on remote host
+      slurp:
+        src: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
+      register: ssh_public_key_file
+
+    - include_role:
+        name: ssh
+      vars:
+        ssh_public_key: "{{ ssh_public_key_file['content'] | b64decode }}"
+
     - include_role:
         name: ssh
 

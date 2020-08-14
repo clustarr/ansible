@@ -13,8 +13,7 @@
         mac: "{{ vm.mac.net0 | replace(':', '-') | lower }}"
 
 # prepare pxe for node
-- hosts: localhost
-  connection: local
+- hosts: controlserver
   tasks:
     - include_role:
         name: pxe
