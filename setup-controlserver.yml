@@ -2,7 +2,6 @@
 # ansible-playbook setup-controlserver.yml
 ---
 - hosts: controlserver
-  remote_user: "{{ user }}"
   tasks:
     - name: create ssh directory
       file:
