@@ -1,0 +1,21 @@
+---
+- name: create ssh directory
+  file:
+    path: "{{ ansible_env.HOME }}/.ssh"
+    state: directory
+    mode: 0775
+
+- name: generate openssh keypair
+  openssh_keypair:
+    path: "{{ ansible_env.HOME }}/.ssh/id_rsa"
+
+- name: read openssh pubic key on remote host
+  slurp:
+    src: "{{ ansible_env.HOME }}/.ssh/id_rsa.pub"
+  register: ssh_public_key_file
+
+- name: set authorized key for the same host
+  authorized_key:
+    user: "{{ user }}"
+    state: present
+    key: "{{ ssh_public_key_file['content'] | b64decode }}"
