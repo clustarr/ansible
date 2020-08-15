@@ -9,12 +9,14 @@ nodes:
       - etcd
       - worker
   {%- endfor %}
+
   {% for host in groups['workers_reachable'] | default([]) -%}
   - address: {{ host }}
     user: {{ user }}
     role:
       - worker
   {%- endfor %}
+
 
 network:
   plugin: weave
