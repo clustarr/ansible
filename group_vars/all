@@ -15,7 +15,7 @@ proxmox_api_node: pve
 
 proxmox_vm_storage: local-lvm
 proxmox_vm_storage_capacity: 40  # GB
-proxmox_vm_sockets: 2
+proxmox_vm_sockets: 1
 proxmox_vm_cores: 4
 proxmox_vm_memory: 3072  # MB
 

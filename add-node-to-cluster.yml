@@ -21,8 +21,7 @@
 - import_playbook: group-reachable.yml
 
 # add node to kubernetes cluster
-- hosts: localhost
-  connection: local
+- hosts: controlserver
   tasks:
     - include_role:
         name: rke

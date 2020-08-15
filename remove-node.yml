@@ -14,8 +14,7 @@
         tasks_from: remove-vm
 
 # remove pxe config for node
-- hosts: localhost
-  connection: local
+- hosts: controlserver
   tasks:
     - set_fact:
         mac: "{{ hostvars[hostname].ansible_default_ipv4.macaddress | replace(':', '-') | lower }}"
@@ -27,8 +26,7 @@
 - import_playbook: group-reachable.yml
 
 # remove node from kubernetes cluster
-- hosts: localhost
-  connection: local
+- hosts: controlserver
   tasks:
     - include_role:
         name: rke
