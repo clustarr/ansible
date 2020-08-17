@@ -1,0 +1,7 @@
+# this playbook is executed on the controlserver
+# ansible-playbook rke-remove.yml
+---
+- hosts: controlserver
+  tasks:
+    - name: setup cluster
+      command: "rke remove"

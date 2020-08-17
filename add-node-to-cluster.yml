@@ -18,4 +18,4 @@
         vm_groups:
           - "{{ group }}"
 
-- import_playbook: sync-cluster.yml
+- import_playbook: rke-up.yml
