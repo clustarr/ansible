@@ -3,5 +3,5 @@
 ---
 - hosts: controlserver
   tasks:
-    - name: setup cluster
-      command: "rke remove"
+    - name: remove cluster
+      command: "rke remove --config ~/cluster.yml --force"
