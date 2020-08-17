@@ -6,5 +6,8 @@
     api_host: "{{ ansible_default_ipv4.address }}"
     name: "{{ hostname }}"
     node: "{{ proxmox_api_node }}"
+    sockets: "{{ proxmox_vm_sockets }}"
+    cores: "{{ proxmox_vm_cores }}"
+    memory: "{{ proxmox_vm_memory }}"
     description: "{\"groups\": {{ vm_groups | to_json }}}"
     update: yes
