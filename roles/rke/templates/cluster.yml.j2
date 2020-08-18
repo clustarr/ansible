@@ -1,5 +1,3 @@
-cluster_name: rancher
-
 nodes:
   {% for host in groups['masters'] | default([]) -%}
   {% if host in groups['running'] -%}
@@ -19,9 +17,3 @@ nodes:
       - worker
   {% endif %}
   {%- endfor %}
-
-network:
-  plugin: weave
-
-ingress:
-  provider: nginx
