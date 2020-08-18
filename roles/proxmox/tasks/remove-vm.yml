@@ -8,6 +8,7 @@
     node: "{{ proxmox_api_node }}"
     state: stopped
     force: yes
+    timeout: 600
 
 - name: remove proxmox vm
   proxmox_kvm:
