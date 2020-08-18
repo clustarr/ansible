@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook add-node-to-cluster.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7 group=masters"
+# ansible-playbook add-node-to-cluster.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7 group=masters rkeUp=false"
 ---
 # setup node after installation and reboot
 - hosts: "{{ hostname }}"
@@ -19,3 +19,4 @@
           - "{{ group }}"
 
 - import_playbook: rke-up.yml
+  when: rkeUp | bool | default(true)
