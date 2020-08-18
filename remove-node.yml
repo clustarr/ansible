@@ -1,20 +1,6 @@
 # this playbook is executed on the controlserver
 # ansible-playbook remove-node.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7 rkeUp=false"
 ---
-- name: gather facts from host
-  hosts: "{{ hostname }}"
-  remote_user: "{{ user }}"
-
-# remove pxe config for node
-- hosts: controlserver
-  tasks:
-    - set_fact:
-        mac: "{{ hostvars[hostname].ansible_default_ipv4.macaddress | replace(':', '-') | lower }}"
-
-    - include_role:
-        name: pxe
-        tasks_from: remove-config
-
 # remove group from host
 - hosts: proxmox
   remote_user: "{{ user }}"

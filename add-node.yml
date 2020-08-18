@@ -15,11 +15,12 @@
 # prepare pxe for node
 - hosts: controlserver
   tasks:
+    - set_fact:
+        mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
+
     - include_role:
         name: pxe
         tasks_from: add-config
-      vars:
-        mac: "{{ hostvars[groups['proxmox'][0]].mac }}"
 
 # start node
 - hosts: proxmox
@@ -38,6 +39,13 @@
       wait_for_connection:
         timeout: 1800  # 30 minutes
         sleep: 2
+
+# remove pxe config for node
+- hosts: controlserver
+  tasks:
+    - include_role:
+        name: pxe
+        tasks_from: remove-config
 
 - hosts: proxmox
   remote_user: "{{ user }}"
