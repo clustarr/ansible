@@ -9,24 +9,14 @@
         name: proxmox
         tasks_from: group-vm
       when:
-        - hostname in groups['masters'] or hostname in groups['workers']
+        - hostname in groups['masters'] | default([]) or hostname in groups['workers'] | default([])
         - rkeUp | bool | default(true)
 
 # remove node from kubernetes cluster
-- hosts: controlserver
-  tasks:
-    - include_role:
-        name: rke
-        tasks_from: config
-      when:
-        - hostname in groups['masters'] or hostname in groups['workers']
-        - rkeUp | bool | default(true)
-
-    - name: setup cluster
-      command: "rke up --config ~/cluster.yml"
-      when:
-        - hostname in groups['masters'] or hostname in groups['workers']
-        - rkeUp | bool | default(true)
+- import_playbook: rke-up.yml
+  when:
+    - hostname in groups['masters'] | default([]) or hostname in groups['workers'] | default([])
+    - rkeUp | bool | default(true)
 
 # remove node
 - hosts: proxmox
