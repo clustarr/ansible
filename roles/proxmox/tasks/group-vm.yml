@@ -9,7 +9,7 @@
     sockets: "{{ proxmox_vm_sockets }}"
     cores: "{{ proxmox_vm_cores }}"
     memory: "{{ proxmox_vm_memory }}"
-    description: "{\"groups\": {{ vm_groups | to_json }}}"
+    description: "{\"groups\": {{ vm_groups | default([]) | to_json }}}"
     update: yes
 
 - meta: refresh_inventory

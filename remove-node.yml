@@ -15,13 +15,13 @@
         name: pxe
         tasks_from: remove-config
 
-# remove node
+# remove group from host
 - hosts: proxmox
   remote_user: "{{ user }}"
   tasks:
     - include_role:
         name: proxmox
-        tasks_from: remove-vm
+        tasks_from: group-vm
 
 # remove node from kubernetes cluster
 - hosts: controlserver
@@ -33,8 +33,10 @@
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"
 
-    # display cluster pods on all nodes
-    - shell: "kubectl get pod -o wide --all-namespaces --kubeconfig ~/kube_config_cluster.yml"
-      register: result
-    - debug:
-        var: result.stdout_lines
+# remove node
+- hosts: proxmox
+  remote_user: "{{ user }}"
+  tasks:
+    - include_role:
+        name: proxmox
+        tasks_from: remove-vm
