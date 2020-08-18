@@ -1,5 +1,5 @@
 # this playbook is executed on the controlserver
-# ansible-playbook remove-node.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7"
+# ansible-playbook remove-node.yml --extra-vars "hostname=clustarr-6cdef8c1eafc9d0996e3d59920783df7 rkeUp=false"
 ---
 - name: gather facts from host
   hosts: "{{ hostname }}"
@@ -22,6 +22,9 @@
     - include_role:
         name: proxmox
         tasks_from: group-vm
+      when:
+        - hostname in groups['masters'] or hostname in groups['workers']
+        - rkeUp | bool | default(true)
 
 # remove node from kubernetes cluster
 - hosts: controlserver
@@ -29,9 +32,15 @@
     - include_role:
         name: rke
         tasks_from: config
+      when:
+        - hostname in groups['masters'] or hostname in groups['workers']
+        - rkeUp | bool | default(true)
 
     - name: setup cluster
       command: "rke up --config ~/cluster.yml"
+      when:
+        - hostname in groups['masters'] or hostname in groups['workers']
+        - rkeUp | bool | default(true)
 
 # remove node
 - hosts: proxmox
