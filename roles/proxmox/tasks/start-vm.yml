@@ -24,3 +24,5 @@
     name: "{{ hostname }}"
     node: "{{ proxmox_api_node }}"
     state: started
+
+- meta: refresh_inventory

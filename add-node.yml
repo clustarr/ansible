@@ -29,13 +29,6 @@
         name: proxmox
         tasks_from: start-vm
 
-# refresh proxmox inventory to get new node
-- hosts: localhost
-  connection: local
-  gather_facts: false
-  tasks:
-    - meta: refresh_inventory
-
 # setup node after installation and reboot
 - hosts: "{{ hostname }}"
   remote_user: "{{ user }}"

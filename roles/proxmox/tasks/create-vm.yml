@@ -13,3 +13,5 @@
     net: '{"net0":"virtio,bridge=vmbr0"}'
     virtio: '{"virtio0":"{{ proxmox_vm_storage }}:{{ proxmox_vm_storage_capacity }}"}'
     state: present
+
+- meta: refresh_inventory

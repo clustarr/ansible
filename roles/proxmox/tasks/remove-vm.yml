@@ -17,3 +17,5 @@
     name: "{{ hostname }}"
     node: "{{ proxmox_api_node }}"
     state: absent
+
+- meta: refresh_inventory

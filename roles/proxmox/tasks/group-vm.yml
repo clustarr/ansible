@@ -11,3 +11,5 @@
     memory: "{{ proxmox_vm_memory }}"
     description: "{\"groups\": {{ vm_groups | to_json }}}"
     update: yes
+
+- meta: refresh_inventory
