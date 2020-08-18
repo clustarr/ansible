@@ -23,8 +23,6 @@
         name: pxe
         tasks_from: remove-config
 
-- import_playbook: group-reachable.yml
-
 # remove node from kubernetes cluster
 - hosts: controlserver
   tasks:

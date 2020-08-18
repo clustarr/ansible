@@ -1,8 +1,6 @@
 # this playbook is executed on the controlserver manually or used by other playbooks
 # ansible-playbook rke-up.yml
 ---
-- import_playbook: group-reachable.yml
-
 - hosts: controlserver
   tasks:
     - include_role:
