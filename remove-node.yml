@@ -5,14 +5,6 @@
   hosts: "{{ hostname }}"
   remote_user: "{{ user }}"
 
-# remove node
-- hosts: proxmox
-  remote_user: "{{ user }}"
-  tasks:
-    - include_role:
-        name: proxmox
-        tasks_from: remove-vm
-
 # remove pxe config for node
 - hosts: controlserver
   tasks:
@@ -22,6 +14,14 @@
     - include_role:
         name: pxe
         tasks_from: remove-config
+
+# remove node
+- hosts: proxmox
+  remote_user: "{{ user }}"
+  tasks:
+    - include_role:
+        name: proxmox
+        tasks_from: remove-vm
 
 # remove node from kubernetes cluster
 - hosts: controlserver
