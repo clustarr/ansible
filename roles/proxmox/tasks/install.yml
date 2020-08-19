@@ -8,6 +8,7 @@
   apt_repository:
     repo: "{{ proxmox_no_subscription_repository }}"
     state: present
+    mode: '0666'
 
 - name: install pip
   apt:
