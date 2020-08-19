@@ -1,0 +1,17 @@
+---
+- name: create clustarr directory
+  file:
+    path: "{{ ansible_env.HOME }}/clustarr"
+    state: directory
+    mode: 0775
+
+- name: clone clustarr backend repo
+  git:
+    repo: https://github.com/clustarr/backend.git
+    dest: "{{ ansible_env.HOME }}/clustarr/backend"
+    force: yes
+
+- name: start backend
+  docker_compose:
+    project_src: "{{ ansible_env.HOME }}/clustarr/backend"
+    build: yes

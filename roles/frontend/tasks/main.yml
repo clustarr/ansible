@@ -1,9 +1,17 @@
 ---
-- name: run frontend in docker container
-  docker_container:
-    name: frontend
-    image: nginx:latest
-    pull: yes
-    state: started
-    ports:
-      - "80:80"
+- name: create clustarr directory
+  file:
+    path: "{{ ansible_env.HOME }}/clustarr"
+    state: directory
+    mode: 0775
+
+- name: clone clustarr frontend repo
+  git:
+    repo: https://github.com/clustarr/frontend.git
+    dest: "{{ ansible_env.HOME }}/clustarr/frontend"
+    force: yes
+
+- name: start frontend
+  docker_compose:
+    project_src: "{{ ansible_env.HOME }}/clustarr/frontend"
+    build: yes

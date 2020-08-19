@@ -24,12 +24,6 @@
         name: docker
 
     - include_role:
-        name: frontend
-
-    - include_role:
-        name: ansible
-
-    - include_role:
         name: rke
         tasks_from: install
 
@@ -38,3 +32,12 @@
 
     - include_role:
         name: docker-compose
+
+    - include_role:
+        name: ansible
+
+    - include_role:
+        name: backend
+
+    - include_role:
+        name: frontend
