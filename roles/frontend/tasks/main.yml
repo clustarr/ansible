@@ -11,6 +11,14 @@
     dest: "{{ ansible_env.HOME }}/clustarr/frontend"
     force: yes
 
+- name: import .env.local to frontend directory
+  become: yes
+  template:
+    src: ".env.local.j2"
+    dest: "{{ ansible_env.HOME }}/clustarr/frontend/.env.local"
+    mode: 0775
+    force: yes
+
 - name: start frontend
   docker_compose:
     project_src: "{{ ansible_env.HOME }}/clustarr/frontend"
