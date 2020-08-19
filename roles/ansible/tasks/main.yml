@@ -31,3 +31,15 @@
     dest: "/etc/ansible/proxmox.json"
     mode: 0775
     force: yes
+
+- name: create clustarr directory
+  file:
+    path: "{{ ansible_env.HOME }}/clustarr"
+    state: directory
+    mode: 0775
+
+- name: clone clustarr ansible repo
+  git:
+    repo: https://github.com/clustarr/ansible.git
+    dest: "{{ ansible_env.HOME }}/clustarr/ansible"
+    force: yes
