@@ -12,3 +12,8 @@
     state: present
     regexp: "^#?PermitRootLogin"
     line: "PermitRootLogin prohibit-password"
+  notify:
+    - restart sshd
+
+# flush handlers to start triggered handlers before next task is executed
+- meta: flush_handlers

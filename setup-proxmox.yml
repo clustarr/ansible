@@ -9,10 +9,10 @@
     - shell: exit 0
       register: result
       ignore_unreachable: yes
+
     - set_fact:
         ssh_user: "{{ user if result.unreachable | default(false) else ansible_ssh_user }}"
-    - debug:
-        var: ssh_user
+
     - meta: clear_host_errors
 
 # setup proxmox with that user
