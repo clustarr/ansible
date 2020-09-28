@@ -38,8 +38,9 @@
     state: directory
     mode: 0775
 
-- name: clone clustarr ansible repo
-  git:
-    repo: https://github.com/clustarr/ansible.git
-    dest: "{{ ansible_env.HOME }}/clustarr/ansible"
-    force: yes
+- name: copy local clustarr ansible repo to remote
+  synchronize:
+    src: "{{ playbook_dir }}"
+    dest: "{{ ansible_env.HOME }}/clustarr"
+    rsync_opts:
+      - "--exclude=.git"
