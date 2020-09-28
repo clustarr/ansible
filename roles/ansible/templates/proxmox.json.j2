@@ -1,6 +1,6 @@
 {
     "url": "https://{{ groups['proxmox'][0] }}:8006/",
-    "username": "root@pam",
-    "password": "123456",
+    "username": "{{ proxmox_api_user }}",
+    "password": "{{ proxmox_api_pass }}",
     "validateCert": false
 }
