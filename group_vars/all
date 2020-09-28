@@ -22,17 +22,13 @@ proxmox_vm_memory: 3072  # MB
 proxmox_enterprise_repository: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
 proxmox_no_subscription_repository: "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
 
-kubectl_version: v1.18.6  # https://storage.googleapis.com/kubernetes-release/release/stable.txt
+kubectl_version: v1.19.2  # https://storage.googleapis.com/kubernetes-release/release/stable.txt
 kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
-kubectl_checksum: sha256:62fcb9922164725c7cba5747562f2ad2f4d834ad0a458c1e4c794cc203dcdfb3  # https://storage.googleapis.com/kubernetes-release/release/v1.18.6/bin/linux/amd64/kubectl.sha256
+kubectl_checksum: sha256:f51adfe7968ee173dbfb3dabfc10dc774983cbf8a3a7c1c75a1423b91fda6821  # https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl.sha256
 
 ubuntu_server_url: http://releases.ubuntu.com/20.04/ubuntu-20.04.1-live-server-amd64.iso  # http://releases.ubuntu.com/20.04/
 ubuntu_server_checksum: sha256:443511f6bf12402c12503733059269a2e10dec602916c0a75263e5d990f6bb93  # https://releases.ubuntu.com/20.04/SHA256SUMS
 
-rke_version: v1.1.4  # https://github.com/rancher/rke/releases
+rke_version: v1.1.7  # https://github.com/rancher/rke/releases/latest
 rke_url: "https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-amd64"
-rke_checksum: sha256:1c7bb6e7eb3c820475b3ecbc4fc5786a912658b9d0e1f4323759c1bb72d6a758  # https://github.com/rancher/rke/releases
-
-docker_compose_version: 1.26.2  # https://github.com/docker/compose/releases/
-docker_compose_url: "https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-Linux-x86_64"
-docker_compose_checksum: sha256:13e50875393decdb047993c3c0192b0a3825613e6dfc0fa271efed4f5dbdd6eb  # https://github.com/docker/compose/releases/
+rke_checksum: sha256:ebc62233f213762ef9686ac9029638f646269d17843ed7b0e4dbd9df5921b855  # https://github.com/rancher/rke/releases/download/v1.1.7/sha256sum.txt
