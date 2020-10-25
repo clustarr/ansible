@@ -22,13 +22,13 @@ proxmox_vm_memory: 3072  # MB
 proxmox_enterprise_repository: "deb https://enterprise.proxmox.com/debian/pve buster pve-enterprise"
 proxmox_no_subscription_repository: "deb http://download.proxmox.com/debian/pve buster pve-no-subscription"
 
-kubectl_version: v1.19.2  # https://storage.googleapis.com/kubernetes-release/release/stable.txt
+kubectl_version: v1.19.3  # https://storage.googleapis.com/kubernetes-release/release/stable.txt
 kubectl_url: "https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl"
-kubectl_checksum: sha256:f51adfe7968ee173dbfb3dabfc10dc774983cbf8a3a7c1c75a1423b91fda6821  # https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl.sha256
+kubectl_checksum: sha256:84eeb8237448e4f431fef0f0ec0ba8b07558d8e52d5a7e89b4ae64dadcffbe66  # https://storage.googleapis.com/kubernetes-release/release/{{ kubectl_version }}/bin/linux/amd64/kubectl.sha256
 
 ubuntu_server_url: http://releases.ubuntu.com/20.04/ubuntu-20.04.1-live-server-amd64.iso  # http://releases.ubuntu.com/20.04/
 ubuntu_server_checksum: sha256:443511f6bf12402c12503733059269a2e10dec602916c0a75263e5d990f6bb93  # https://releases.ubuntu.com/20.04/SHA256SUMS
 
-rke_version: v1.1.7  # https://github.com/rancher/rke/releases/latest
+rke_version: v1.2.1  # https://github.com/rancher/rke/releases/latest
 rke_url: "https://github.com/rancher/rke/releases/download/{{ rke_version }}/rke_linux-amd64"
-rke_checksum: sha256:ebc62233f213762ef9686ac9029638f646269d17843ed7b0e4dbd9df5921b855  # https://github.com/rancher/rke/releases/download/v1.1.7/sha256sum.txt
+rke_checksum: sha256:e1e288d557cea6140f16ba6659fe427fb7431c3cd62cc67f2cdfdf415a4012da  # https://github.com/rancher/rke/releases/download/{{ rke_version }}/sha256sum.txt
